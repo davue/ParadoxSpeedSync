@@ -9,7 +9,7 @@ you don't have to ask for permission all the time if you want to adjust the game
 ## Usage
 Currently it is only a command line application, so you have to run it in your terminal. I'm planning to add a UI later.
 
-#### Client
+### Client
 A client can connect to a server as follows:
 ```
 java -jar ParadoxSpeedSync.jar -c <host> <port>
@@ -21,7 +21,7 @@ While starting a client, you will be asked to set up three key bindings:
 
 Make sure that none of these keys conflict with in-game key bindings.
 
-#### Host
+### Host
 The host of the multiplayer session has to start a server using:
 ```
 java -jar ParadoxSpeedSync.jar -s <port>
