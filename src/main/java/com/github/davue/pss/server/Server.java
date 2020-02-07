@@ -27,9 +27,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-
 import java.util.List;
-
 import java.util.Scanner;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
@@ -39,7 +37,7 @@ public class Server extends Thread {
     // The custom key binds
     public int SPEED_UP_KEY;
     public int SPEED_DOWN_KEY;
-    public int RESET_KEY;
+    private final KeyListener keyListener;
     /**
      * A list of all connected clients.
      */
@@ -76,6 +74,45 @@ public class Server extends Thread {
     public Server(int port) {
         this.port = port;
         this.speedNegotiator = new SpeedNegotiator(this, connections);
+        this.keyListener = new KeyListener(this);
+
+        // Register global key listener
+        try {
+            // Disable logger of global key listener library
+            java.util.logging.Logger libLogger = java.util.logging.Logger.getLogger(GlobalScreen.class.getPackage().getName());
+            libLogger.setLevel(Level.SEVERE);
+            libLogger.setUseParentHandlers(false);
+
+            GlobalScreen.registerNativeHook();
+            GlobalScreen.addNativeKeyListener(keyListener);
+        } catch (NativeHookException e) {
+            LOGGER.error("Could not register native hook. Exiting.");
+            System.exit(1);
+        }
+
+        // Initialize key bindings
+        try {
+            Scanner scanner = new Scanner(System.in);
+
+            System.out.print("Please enter the speed up key.\n" +
+                    "This is the key, the server will simulate to speed up in-game.\n" +
+                    "Press the key and then ENTER: ");
+            scanner.nextLine();
+            Thread.sleep(200);
+            this.SPEED_UP_KEY = keyListener.getSecondLastKey();
+            LOGGER.debug("Registered SPEED_UP to: {}", SPEED_UP_KEY);
+
+            System.out.print("Please enter the speed down key.\n" +
+                    "This is the key, the server will simulate to speed down in-game.\n" +
+                    "Press the key and then ENTER: ");
+            scanner.nextLine();
+            Thread.sleep(200);
+            this.SPEED_DOWN_KEY = keyListener.getSecondLastKey();
+            LOGGER.debug("Registered SPEED_DOWN to: {}", SPEED_DOWN_KEY);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
     }
 
     @Override
