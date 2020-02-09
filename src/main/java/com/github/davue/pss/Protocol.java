@@ -19,9 +19,21 @@
 package com.github.davue.pss;
 
 public class Protocol {
+    /**
+     * The minimum speed the protocol allows.
+     */
     public static final short MIN_SPEED = 1;
+
+    /**
+     * The maximum speed the protocol allows.
+     * TODO: Make this customizable
+     */
     public static final short MAX_SPEED = 5;
 
+    /**
+     * Specifies all messages the protocol understands.
+     * A message always consists of a CMD followed by some arguments if needed and is terminated with a newline.
+     */
     public static class MESSAGES {
         /**
          * The HELLO message used to do a handshake between client and server.
