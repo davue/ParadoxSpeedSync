@@ -7,7 +7,7 @@ node {
         }
 
         stage('Maven Build') {
-            docker.image('maven:3-jdk-13-slim').inside('-v /root/.m2:/root/.m2') {
+            docker.image('maven:3-jdk-13').inside('-v /root/.m2:/root/.m2') {
                 sh 'mvn -B clean install'
             }
 
