@@ -29,6 +29,7 @@ import java.net.Socket;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 
 public class Server extends Thread {
@@ -37,6 +38,7 @@ public class Server extends Thread {
     public int SPEED_UP_KEY;
     public int SPEED_DOWN_KEY;
     private final KeyListener keyListener;
+    public AtomicInteger nextClientID = new AtomicInteger(0);
     /**
      * A list of all connected clients.
      */

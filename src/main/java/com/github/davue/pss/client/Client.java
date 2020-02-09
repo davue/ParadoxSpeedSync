@@ -30,17 +30,45 @@ import java.util.logging.Level;
 
 public class Client extends Thread {
     public final Logger LOGGER = LoggerFactory.getLogger("Client");
+
+    /**
+     * The connection of the client to the server
+     */
     private final Connection connection;
-    private final KeyListener keyListener;
+
+    /**
+     * The raw hardware key code of the key the client presses to send a speed up to the server.
+     */
     public int SPEED_UP_KEY;
+
+    /**
+     * The raw hardware key code of the key the client presses to send a speed down to the server.
+     */
     public int SPEED_DOWN_KEY;
+
+    /**
+     * The raw hardware key code of the key the client presses to request a re-sync from the server.
+     */
     public int SYNC_KEY;
-    private boolean isHost = false;
+
+    /**
+     * The clients current speed.
+     */
     private int currentSpeed = 1;
+
+    /**
+     * The unique ID of the client assigned by the server.
+     */
+    private int id = 0;
+
+    /**
+     * The name of the client.
+     */
+    private String name = null;
 
     public Client(String hostname, int port) {
         this.connection = new Connection(this, hostname, port);
-        this.keyListener = new KeyListener(this);
+        KeyListener keyListener = new KeyListener(this);
 
         // Register global key listener
         try {
@@ -127,6 +155,6 @@ public class Client extends Thread {
         }
 
         // Send initial handshake
-        connection.send(Protocol.MESSAGES.HELLO);
+        connection.send(Protocol.MESSAGES.HELLO(name));
     }
 }

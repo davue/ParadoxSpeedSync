@@ -50,7 +50,7 @@ public class MessageHandler {
 
                 if (connection.getServer().getPassword().isEmpty()) {
                     connection.getServer().LOGGER.debug("Handshake from {}. Accept.", connection.getSocket().getInetAddress().getHostAddress());
-                    connection.send(Protocol.MESSAGES.HELLO);
+                    connection.send(Protocol.MESSAGES.HELLO(server.nextClientID.getAndIncrement()));
                     connection.state = Connection.State.READY;
                 } else {
                     connection.getServer().LOGGER.debug("Handshake from {}. Waiting for password.", connection.getSocket().getInetAddress().getHostAddress());
@@ -67,11 +67,12 @@ public class MessageHandler {
 
                 if (tokens.length < 2) {
                     connection.getServer().LOGGER.warn("Client at {} sent PASS without arguments.", connection.getSocket().getInetAddress().getHostAddress());
+                    break;
                 }
 
                 if (connection.getServer().getPassword().equals(tokens[1])) {
                     connection.getServer().LOGGER.debug("Received correct PASS from {}. Accept.", connection.getSocket().getInetAddress().getHostAddress());
-                    connection.send(Protocol.MESSAGES.HELLO);
+                    connection.send(Protocol.MESSAGES.HELLO(server.nextClientID.getAndIncrement()));
                     connection.state = Connection.State.READY;
                 } else {
                     connection.getServer().LOGGER.debug("Received incorrect PASS from {}. Sending DENIED.", connection.getSocket().getInetAddress().getHostAddress());
@@ -81,10 +82,12 @@ public class MessageHandler {
             case Protocol.MESSAGES.SPEED:
                 if (connection.state != Connection.State.READY) {
                     connection.getServer().LOGGER.warn("Client at {} wanted to set speed to {} without handshake.", connection.getSocket().getInetAddress().getHostAddress(), tokens[1]);
+                    break;
                 }
 
                 if (tokens.length < 2) {
                     connection.getServer().LOGGER.warn("Client at {} sent SPEED without arguments.", connection.getSocket().getInetAddress().getHostAddress());
+                    break;
                 }
 
                 connection.clientSpeed = Short.parseShort(tokens[1]);
@@ -92,6 +95,11 @@ public class MessageHandler {
                 server.getSpeedNegotiator().check();
                 break;
             case Protocol.MESSAGES.SYNC:
+                if (connection.state != Connection.State.READY) {
+                    connection.getServer().LOGGER.warn("Client at {} wanted to sync without handshake.", connection.getSocket().getInetAddress().getHostAddress());
+                    break;
+                }
+
                 server.LOGGER.debug("Resetting speed.");
                 server.reset();
                 break;

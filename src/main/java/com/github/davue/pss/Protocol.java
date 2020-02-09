@@ -41,6 +41,29 @@ public class Protocol {
         public static final String HELLO = "HELLO";
 
         /**
+         * Constructs a HELLO message with the given id.
+         * This is the handshake response from the server if the connection was successful with the id
+         * being the id assigned to the client by the server.
+         *
+         * @param id The id to assign to the client.
+         * @return The constructed message ready to be sent.
+         */
+        public static String HELLO(int id) {
+            return HELLO + " " + id;
+        }
+
+        /**
+         * Constructs a HELLO message with the given name.
+         * This is the handshake request from a client to the server.
+         *
+         * @param name The name of the client.
+         * @return The constructed message ready to be sent.
+         */
+        public static String HELLO(String name) {
+            return HELLO + " " + name;
+        }
+
+        /**
          * The PASS message used to either notify the client to send a password or send a password to the server.
          */
         public static final String PASS = "PASS";

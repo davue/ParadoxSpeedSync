@@ -38,7 +38,12 @@ public class MessageHandler {
 
         switch (tokens[0]) {
             case Protocol.MESSAGES.HELLO:
-                client.LOGGER.debug("Received handshake from {}. Connection ready.", connection.getSocket().getInetAddress().getHostAddress());
+                if (tokens.length < 2) {
+                    client.LOGGER.warn("Server at {} sent handshake without specifying our ID. Protocol mismatch?", connection.getSocket().getInetAddress().getHostAddress());
+                    break;
+                }
+
+                client.LOGGER.debug("Received handshake from {} with ID: {}. Connection ready.", connection.getSocket().getInetAddress().getHostAddress(), tokens[1]);
                 client.LOGGER.info("Connected to {}:{}.", connection.getSocket().getInetAddress().getHostAddress(), connection.getSocket().getPort());
                 connection.state = Connection.State.READY;
                 break;
