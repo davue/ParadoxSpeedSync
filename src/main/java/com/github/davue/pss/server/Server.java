@@ -18,7 +18,6 @@
 
 package com.github.davue.pss.server;
 
-import com.github.davue.pss.Protocol;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 import org.slf4j.Logger;
@@ -171,12 +170,6 @@ public class Server extends Thread {
      */
     public void reset() {
         speedNegotiator.reset();
-
-        // Reset all clients
-        // TODO: Do we actually want this?
-        for (Connection connection : connections) {
-            connection.send(Protocol.MESSAGES.SYNC);
-        }
     }
 
     /**
