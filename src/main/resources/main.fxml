@@ -1,27 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!--
-  ~ A cross-platform tool to overcome the limitations of the speed controls of Paradox Interactive games.
-  ~ Copyright (C) 2020 David Enderlin
-  ~
-  ~ This program is free software: you can redistribute it and/or modify
-  ~ it under the terms of the GNU General Public License as published by
-  ~ the Free Software Foundation, either version 3 of the License, or
-  ~ (at your option) any later version.
-  ~
-  ~ This program is distributed in the hope that it will be useful,
-  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
-  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  ~ GNU General Public License for more details.
-  ~
-  ~ You should have received a copy of the GNU General Public License
-  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
-  -->
-
-<?import javafx.scene.layout.AnchorPane?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml"
-            xmlns="http://javafx.com/javafx"
-            fx:controller="Main"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+      minWidth="-Infinity" prefWidth="174.0" styleClass="body" stylesheets="@pss.css"
+      xmlns="http://javafx.com/javafx/11.0.1">
+   <children>
+      <HBox styleClass="head">
+         <children>
+            <TextField prefHeight="20.0" promptText="&lt;host&gt;:[port] / [port]" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets left="5.0" top="5.0"/>
+               </HBox.margin>
+            </TextField>
+            <HBox alignment="CENTER_RIGHT" prefHeight="30.0" spacing="1.0">
+               <children>
+                  <StackPane>
+                     <children>
+                        <Button focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity"
+                                minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="20.0"
+                                prefWidth="20.0" text="S"/>
+                     </children>
+                  </StackPane>
+                  <StackPane>
+                     <children>
+                        <Button cancelButton="true" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity"
+                                minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="20.0"
+                                prefWidth="20.0" text="X" textAlignment="CENTER"/>
+                     </children>
+                  </StackPane>
+               </children>
+               <padding>
+                  <Insets left="5.0" right="5.0"/>
+               </padding>
+            </HBox>
+         </children>
+      </HBox>
+      <HBox styleClass="head">
+         <children>
+            <PasswordField prefHeight="20.0" promptText="password" styleClass="text-field" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0"/>
+               </HBox.margin>
+            </PasswordField>
+         </children>
+      </HBox>
+      <HBox styleClass="head">
+         <children>
+            <TextField prefHeight="20.0" promptText="name" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0"/>
+               </HBox.margin>
+            </TextField>
+         </children>
+      </HBox>
+      <HBox>
+         <children>
+            <Button defaultButton="true" mnemonicParsing="false" text="Connect"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <ProgressIndicator prefHeight="20.0" prefWidth="20.0"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button mnemonicParsing="false" text="Host"/>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+         </padding>
+      </HBox>
+      <HBox>
+         <children>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label styleClass="label-error" text="Wrong password"/>
+            <Region HBox.hgrow="ALWAYS"/>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+         </padding>
+      </HBox>
+   </children>
+</VBox>

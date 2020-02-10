@@ -1,0 +1,89 @@
+/*
+ * A cross-platform tool to overcome the limitations of the speed controls of Paradox Interactive games.
+ * Copyright (C) 2020 David Enderlin
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+.body {
+    -fx-background-color: #121212;
+}
+
+.head {
+    -fx-background-color: #272727;
+}
+
+.text-field {
+    -fx-font-family: Calibri;
+    -fx-background-color: #121212;
+    -fx-background-radius: 0;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 12;
+    -fx-padding: 2;
+}
+
+.label {
+    -fx-text-fill: #ffffff;
+    -fx-font-family: Calibri;
+}
+
+.label-error {
+    -fx-text-fill: #c62828;
+}
+
+.rectangle {
+    -fx-fill: #ffffff00;
+    -fx-stroke: #afafaf;
+    -fx-stroke-width: 1;
+}
+
+.rectangle-green {
+    -fx-fill: #558b2f;
+    -fx-stroke: #afafaf;
+    -fx-stroke-width: 1;
+}
+
+.rectangle-red {
+    -fx-fill: #c62828;
+    -fx-stroke: #afafaf;
+    -fx-stroke-width: 1;
+}
+
+.progress-indicator {
+    -fx-progress-color: #ffffff;
+}
+
+.button {
+    -fx-font-size: 12;
+    -fx-font-family: Calibri;
+    -fx-background-radius: 0;
+    -fx-background-color: #424242;
+    -fx-text-fill: #ffffff;
+    -fx-background-insets: 0;
+    -fx-min-height: 20;
+    -fx-max-height: 20;
+}
+
+.button:hover {
+    -fx-background-color: #6d6d6d;
+}
+
+.button:pressed {
+    -fx-background-color: #6d6d6d;
+}
+
+.button:focused {
+    -fx-effect: innershadow(gaussian, #ffffff, 1, 1, 0, 0);
+}
+
