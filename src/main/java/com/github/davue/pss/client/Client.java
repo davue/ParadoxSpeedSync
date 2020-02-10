@@ -24,7 +24,6 @@ import org.jnativehook.NativeHookException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.util.Scanner;
 import java.util.logging.Level;
 
@@ -57,16 +56,25 @@ public class Client extends Thread {
     private int currentSpeed = 1;
 
     /**
-     * The unique ID of the client assigned by the server.
+     * The password the client will use to connect.
      */
-    private int id = 0;
+    private final String password;
 
     /**
      * The name of the client.
      */
     private String name = null;
+    /**
+     * The unique ID of the client assigned by the server.
+     */
+    public int id = 0;
 
     public Client(String hostname, int port) {
+        this(hostname, port, "");
+    }
+
+    public Client(String hostname, int port, String password) {
+        this.password = password;
         this.connection = new Connection(this, hostname, port);
         KeyListener keyListener = new KeyListener(this);
 
@@ -85,6 +93,7 @@ public class Client extends Thread {
         }
 
         // Initialize key bindings
+        // Note that we need to wait 200ms after every keypress to give the KeyListener enough time to run
         try {
             Scanner scanner = new Scanner(System.in);
 
@@ -156,5 +165,9 @@ public class Client extends Thread {
 
         // Send initial handshake
         connection.send(Protocol.MESSAGES.HELLO(name));
+    }
+
+    public String getPassword() {
+        return password;
     }
 }

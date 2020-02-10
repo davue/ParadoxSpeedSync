@@ -67,6 +67,7 @@ public class MessageHandler {
 
                 if (tokens.length < 2) {
                     connection.getServer().LOGGER.warn("Client at {} sent PASS without arguments.", connection.getSocket().getInetAddress().getHostAddress());
+                    connection.send(Protocol.MESSAGES.DENIED);
                     break;
                 }
 

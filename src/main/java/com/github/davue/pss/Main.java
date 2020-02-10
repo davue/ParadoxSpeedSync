@@ -23,14 +23,22 @@ import com.github.davue.pss.server.Server;
 
 public class Main {
     public static void main(String[] args) {
-        if (args.length >= 1 && args[0].toLowerCase().equals("-s")) {
-            new Server(Integer.parseInt(args[1])).run();
-        } else if (args.length >= 2 && args[0].toLowerCase().equals("-c")) {
-            new Client(args[1], Integer.parseInt(args[2])).run();
+        if (args.length >= 2 && args[0].toLowerCase().equals("-s")) {
+            if (args.length >= 4 && args[2].toLowerCase().equals("-p")) {
+                new Server(Integer.parseInt(args[1]), args[3]).run();
+            } else {
+                new Server(Integer.parseInt(args[1])).run();
+            }
+        } else if (args.length >= 3 && args[0].toLowerCase().equals("-c")) {
+            if (args.length >= 5 && args[3].toLowerCase().equals("-p")) {
+                new Client(args[1], Integer.parseInt(args[2]), args[4]).run();
+            } else {
+                new Client(args[1], Integer.parseInt(args[2])).run();
+            }
         } else {
             System.out.println("Usage:\n" +
-                    "    Server: -s <port>\n" +
-                    "    Client: -c <host> <port>");
+                    "    Server: -s <port> [-p <password>]\n" +
+                    "    Client: -c <host> <port> [-p <password>]");
         }
     }
 }

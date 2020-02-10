@@ -34,15 +34,14 @@ import java.util.logging.Level;
 
 public class Server extends Thread {
     public final Logger LOGGER = LoggerFactory.getLogger("Server");
-    // The custom key binds
-    public int SPEED_UP_KEY;
-    public int SPEED_DOWN_KEY;
-    private final KeyListener keyListener;
-    public AtomicInteger nextClientID = new AtomicInteger(0);
+    /**
+     * An atomic counter to get unique client id's.
+     */
+    public final AtomicInteger nextClientID = new AtomicInteger(0);
     /**
      * A list of all connected clients.
      */
-    private final List<Connection> connections = new CopyOnWriteArrayList<>();
+    public final List<Connection> connections = new CopyOnWriteArrayList<>();
     /**
      * The speed negotiator.
      */
@@ -51,6 +50,12 @@ public class Server extends Thread {
      * The port of the server.
      */
     private final int port;
+    /**
+     * The password of the server, empty if no password.
+     */
+    private final String password;
+    // The custom key binds
+    public int SPEED_UP_KEY;
     /**
      * The speed of the host.
      */
@@ -67,15 +72,17 @@ public class Server extends Thread {
      * The client which is the current host, null if the server is host.
      */
     private Connection host = null;
-    /**
-     * The password of the server, null if no password.
-     */
-    private String password = "";
+    public int SPEED_DOWN_KEY;
 
     public Server(int port) {
+        this(port, "");
+    }
+
+    public Server(int port, String password) {
         this.port = port;
+        this.password = password;
         this.speedNegotiator = new SpeedNegotiator(this, connections);
-        this.keyListener = new KeyListener(this);
+        KeyListener keyListener = new KeyListener(this);
 
         // Register global key listener
         try {
