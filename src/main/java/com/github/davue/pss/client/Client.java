@@ -63,7 +63,7 @@ public class Client extends Thread {
     /**
      * The name of the client.
      */
-    private String name = null;
+    private String name = "CLIENT_NAME";
     /**
      * The unique ID of the client assigned by the server.
      */
