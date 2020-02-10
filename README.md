@@ -36,6 +36,7 @@ In addition to that, the host also has to connect to it's own server by starting
 ## Planned Features
 * Small UI to simplify setup
 * In-game overlay to see your current speed
+* Dedicated server mode (such that the client that hosts the game can be on another device as the speed sync server)
 * Different speed agreement strategies
 
 ## Additional Information

@@ -18,7 +18,10 @@
 
 package com.github.davue.pss.server;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 public class Connection extends Thread {
@@ -71,6 +74,9 @@ public class Connection extends Thread {
                 messageHandler.handleMessage(line);
             }
         } catch (IOException e) {
+            // Remove connection from server connection list on error
+            server.connections.remove(this);
+
             e.printStackTrace();
         }
     }

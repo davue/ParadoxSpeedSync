@@ -38,16 +38,30 @@ public class MessageHandler {
 
         switch (tokens[0]) {
             case Protocol.MESSAGES.HELLO:
-                client.LOGGER.debug("Received handshake from {}. Connection ready.", connection.getSocket().getInetAddress().getHostAddress());
+                if (tokens.length < 2) {
+                    client.LOGGER.warn("Server at {} sent handshake without specifying our ID. Protocol mismatch?", connection.getSocket().getInetAddress().getHostAddress());
+                    break;
+                }
+
+                client.LOGGER.debug("Received handshake from {} with ID: {}. Connection ready.", connection.getSocket().getInetAddress().getHostAddress(), tokens[1]);
                 client.LOGGER.info("Connected to {}:{}.", connection.getSocket().getInetAddress().getHostAddress(), connection.getSocket().getPort());
+                client.id = Integer.parseInt(tokens[1]);
                 connection.state = Connection.State.READY;
                 break;
             case Protocol.MESSAGES.PASS:
                 client.LOGGER.debug("Received PASS from {}. Password required.", connection.getSocket().getInetAddress().getHostAddress());
-                connection.state = Connection.State.READY;
+
+                if (client.getPassword().isEmpty()) {
+                    client.LOGGER.info("Server requires password but no password was specified. Exiting.");
+                    System.exit(1);
+                }
+
+                connection.send(Protocol.MESSAGES.PASS(client.getPassword()));
+                connection.state = Connection.State.INIT;
                 break;
             case Protocol.MESSAGES.DENIED:
                 client.LOGGER.debug("Received DENIED from {}. Password required.", connection.getSocket().getInetAddress().getHostAddress());
+                System.exit(1);
                 connection.state = Connection.State.INIT;
                 break;
             case Protocol.MESSAGES.CLOSE:
