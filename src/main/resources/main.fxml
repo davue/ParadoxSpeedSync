@@ -3,79 +3,95 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+<?import java.lang.String?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
       minWidth="-Infinity" prefWidth="174.0" styleClass="body" stylesheets="@pss.css"
-      xmlns="http://javafx.com/javafx/11.0.1">
-   <children>
-      <HBox styleClass="head">
-         <children>
-            <TextField prefHeight="20.0" promptText="&lt;host&gt;:[port] / [port]" HBox.hgrow="ALWAYS">
-               <HBox.margin>
-                  <Insets left="5.0" top="5.0"/>
-               </HBox.margin>
-            </TextField>
-            <HBox alignment="CENTER_RIGHT" prefHeight="30.0" spacing="1.0">
-               <children>
-                  <StackPane>
-                     <children>
-                        <Button focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity"
-                                minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="20.0"
-                                prefWidth="20.0" text="S"/>
-                     </children>
-                  </StackPane>
-                  <StackPane>
-                     <children>
-                        <Button cancelButton="true" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity"
-                                minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="20.0"
-                                prefWidth="20.0" text="X" textAlignment="CENTER"/>
-                     </children>
-                  </StackPane>
-               </children>
-               <padding>
-                  <Insets left="5.0" right="5.0"/>
-               </padding>
-            </HBox>
-         </children>
-      </HBox>
-      <HBox styleClass="head">
-         <children>
-            <PasswordField prefHeight="20.0" promptText="password" styleClass="text-field" HBox.hgrow="ALWAYS">
-               <HBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0"/>
-               </HBox.margin>
-            </PasswordField>
-         </children>
-      </HBox>
-      <HBox styleClass="head">
-         <children>
-            <TextField prefHeight="20.0" promptText="name" HBox.hgrow="ALWAYS">
-               <HBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0"/>
-               </HBox.margin>
-            </TextField>
-         </children>
-      </HBox>
-      <HBox>
-         <children>
-            <Button defaultButton="true" mnemonicParsing="false" text="Connect"/>
-            <Region HBox.hgrow="ALWAYS"/>
-            <ProgressIndicator prefHeight="20.0" prefWidth="20.0"/>
-            <Region HBox.hgrow="ALWAYS"/>
-            <Button mnemonicParsing="false" text="Host"/>
-         </children>
-         <padding>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-         </padding>
-      </HBox>
-      <HBox>
-         <children>
-            <Region HBox.hgrow="ALWAYS"/>
-            <Label styleClass="label-error" text="Wrong password"/>
-            <Region HBox.hgrow="ALWAYS"/>
-         </children>
-         <padding>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-         </padding>
-      </HBox>
-   </children>
+      xmlns="http://javafx.com/javafx/11.0.1" fx:controller="com.github.davue.pss.ui.MainController">
+    <children>
+        <HBox styleClass="head">
+            <children>
+                <TextField fx:id="addressField" prefHeight="20.0" promptText="&lt;host&gt;:[port] / [port]"
+                           HBox.hgrow="ALWAYS">
+                    <HBox.margin>
+                        <Insets left="5.0" top="5.0"/>
+                    </HBox.margin>
+                </TextField>
+                <HBox alignment="CENTER_RIGHT" prefHeight="30.0" spacing="1.0">
+                    <children>
+                        <Button fx:id="settingsButton" focusTraversable="false" maxHeight="-Infinity"
+                                maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
+                                prefHeight="20.0" prefWidth="20.0" styleClass="icon-button" text="S">
+                            <graphic>
+                                <Region>
+                                    <styleClass>
+                                        <String fx:value="icon"/>
+                                        <String fx:value="settings-icon"/>
+                                    </styleClass>
+                                </Region>
+                            </graphic>
+                        </Button>
+                        <Button fx:id="closeButton" cancelButton="true" onAction="#close" focusTraversable="false"
+                                maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+                                mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" styleClass="icon-button"
+                                text="X">
+                            <graphic>
+                                <Region>
+                                    <styleClass>
+                                        <String fx:value="icon"/>
+                                        <String fx:value="close-icon"/>
+                                    </styleClass>
+                                </Region>
+                            </graphic>
+                        </Button>
+                    </children>
+                    <padding>
+                        <Insets left="5.0" right="5.0"/>
+                    </padding>
+                </HBox>
+            </children>
+        </HBox>
+        <HBox styleClass="head">
+            <children>
+                <PasswordField fx:id="passwordField" prefHeight="20.0" promptText="password" styleClass="text-field"
+                               HBox.hgrow="ALWAYS">
+                    <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0"/>
+                    </HBox.margin>
+                </PasswordField>
+                <fx:include fx:id="dragPane" source="dragpane.fxml"/>
+            </children>
+        </HBox>
+        <HBox styleClass="head">
+            <children>
+                <TextField fx:id="nameField" prefHeight="20.0" promptText="name" HBox.hgrow="ALWAYS">
+                    <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0"/>
+                    </HBox.margin>
+                </TextField>
+            </children>
+        </HBox>
+        <HBox>
+            <children>
+                <Button fx:id="connectButton" defaultButton="true" mnemonicParsing="false" onAction="#connect"
+                        text="Connect"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <ProgressIndicator fx:id="progressIndicator" prefHeight="20.0" prefWidth="20.0" visible="false"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button fx:id="hostButton" mnemonicParsing="false" onAction="#host" text="Host"/>
+            </children>
+            <padding>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+            </padding>
+        </HBox>
+        <HBox fx:id="messageBox">
+            <children>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label styleClass="label-error" text="Wrong password"/>
+                <Region HBox.hgrow="ALWAYS"/>
+            </children>
+            <padding>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+            </padding>
+        </HBox>
+    </children>
 </VBox>

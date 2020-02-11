@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ A cross-platform tool to overcome the limitations of the speed controls of Paradox Interactive games.
+  ~ Copyright (C) 2020 David Enderlin
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import java.lang.String?>
+<HBox xmlns:fx="http://javafx.com/fxml"
+      xmlns="http://javafx.com/javafx"
+      alignment="CENTER"
+      fx:id="dragPane" fx:controller="com.github.davue.pss.ui.DragPaneController" maxHeight="-Infinity"
+      maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseDragged="#dragPaneDrag"
+      onMousePressed="#dragPanePress" prefHeight="20.0" prefWidth="20.0" styleClass="drag-pane">
+    <children>
+        <Region>
+            <styleClass>
+                <String fx:value="icon"/>
+                <String fx:value="drag-icon"/>
+            </styleClass>
+        </Region>
+    </children>
+    <HBox.margin>
+        <Insets right="5.0"/>
+    </HBox.margin>
+</HBox>
