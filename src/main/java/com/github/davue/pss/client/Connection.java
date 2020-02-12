@@ -18,7 +18,12 @@
 
 package com.github.davue.pss.client;
 
-import java.io.*;
+import com.github.davue.pss.Main;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 public class Connection extends Thread {
@@ -64,7 +69,15 @@ public class Connection extends Thread {
             }
         } catch (IOException e) {
             e.printStackTrace();
-            System.exit(1);
+            if (e.getMessage().endsWith(": connect")) {
+                Main.showError(e.getMessage().replace(": connect", ""));
+            } else {
+                Main.showError("Connection closed");
+            }
+        } finally {
+            synchronized (client) {
+                client.notify();
+            }
         }
     }
 
@@ -85,6 +98,18 @@ public class Connection extends Thread {
     public void send(String msg) {
         if (out != null) {
             out.println(msg);
+        }
+    }
+
+    public void close() {
+        if (socket == null)
+            return;
+
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(1);
         }
     }
 

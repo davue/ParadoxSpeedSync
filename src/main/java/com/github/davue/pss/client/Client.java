@@ -18,113 +18,59 @@
 
 package com.github.davue.pss.client;
 
+import com.github.davue.pss.Main;
 import com.github.davue.pss.Protocol;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Scanner;
 import java.util.logging.Level;
 
-public class Client extends Thread {
+public class Client {
     public final Logger LOGGER = LoggerFactory.getLogger("Client");
-
-    /**
-     * The connection of the client to the server
-     */
-    private final Connection connection;
 
     /**
      * The raw hardware key code of the key the client presses to send a speed up to the server.
      */
-    public int SPEED_UP_KEY;
-
+    public int SPEED_UP_KEY = 0;
     /**
      * The raw hardware key code of the key the client presses to send a speed down to the server.
      */
-    public int SPEED_DOWN_KEY;
-
+    public int SPEED_DOWN_KEY = 0;
     /**
      * The raw hardware key code of the key the client presses to request a re-sync from the server.
      */
-    public int SYNC_KEY;
+    public int SYNC_KEY = 0;
+    /**
+     * The password the client will use to connect.
+     */
+    public String password = "";
 
     /**
      * The clients current speed.
      */
     private int currentSpeed = 1;
-
     /**
-     * The password the client will use to connect.
+     * The host the client will connect to.
      */
-    private final String password;
-
+    public String hostname = "";
+    /**
+     * The port the client will connect to.
+     */
+    public int port = 0;
     /**
      * The name of the client.
      */
-    private String name = "CLIENT_NAME";
+    public String name = "CLIENT_NAME";
+    /**
+     * The connection of the client to the server
+     */
+    private Connection connection;
     /**
      * The unique ID of the client assigned by the server.
      */
     public int id = 0;
-
-    public Client(String hostname, int port) {
-        this(hostname, port, "");
-    }
-
-    public Client(String hostname, int port, String password) {
-        this.password = password;
-        this.connection = new Connection(this, hostname, port);
-        KeyListener keyListener = new KeyListener(this);
-
-        // Register global key listener
-        try {
-            // Disable logger of global key listener library
-            java.util.logging.Logger libLogger = java.util.logging.Logger.getLogger(GlobalScreen.class.getPackage().getName());
-            libLogger.setLevel(Level.SEVERE);
-            libLogger.setUseParentHandlers(false);
-
-            GlobalScreen.registerNativeHook();
-            GlobalScreen.addNativeKeyListener(keyListener);
-        } catch (NativeHookException e) {
-            LOGGER.error("Could not register native hook. Exiting.");
-            System.exit(1);
-        }
-
-        // Initialize key bindings
-        // Note that we need to wait 200ms after every keypress to give the KeyListener enough time to run
-        try {
-            Scanner scanner = new Scanner(System.in);
-
-            System.out.print("Please enter the speed up key.\n" +
-                    "This is the key you press to suggest a speed up in-game.\n" +
-                    "Press the key and then ENTER: ");
-            scanner.nextLine();
-            Thread.sleep(200);
-            this.SPEED_UP_KEY = keyListener.getSecondLastKey();
-            LOGGER.debug("Registered SPEED_UP to: {}", SPEED_UP_KEY);
-
-            System.out.print("Please enter the speed down key.\n" +
-                    "This is the key you press to suggest a speed down in-game.\n" +
-                    "Press the key and then ENTER: ");
-            scanner.nextLine();
-            Thread.sleep(200);
-            this.SPEED_DOWN_KEY = keyListener.getSecondLastKey();
-            LOGGER.debug("Registered SPEED_DOWN to: {}", SPEED_DOWN_KEY);
-
-            System.out.print("Please enter the speed sync key.\n" +
-                    "This is the key you press to re-sync the speed with the actual in-game speed.\n" +
-                    "Press the key and then ENTER: ");
-            scanner.nextLine();
-            Thread.sleep(200);
-            this.SYNC_KEY = keyListener.getSecondLastKey();
-            LOGGER.debug("Registered SYNC to: {}", SYNC_KEY);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            System.exit(1);
-        }
-    }
 
     public void speedUp() {
         if (currentSpeed < Protocol.MAX_SPEED) {
@@ -150,8 +96,8 @@ public class Client extends Thread {
         connection.send(Protocol.MESSAGES.SYNC);
     }
 
-    @Override
-    public void run() {
+    public void start() {
+        this.connection = new Connection(this, hostname, port == 0 ? Protocol.DEFAULT_PORT : port);
         connection.start();
 
         // Wait for connection to be established
@@ -163,11 +109,32 @@ public class Client extends Thread {
             }
         }
 
+        if (!connection.isAlive())
+            return;
+
+        // Client seems to be connected at this point so we can switch to the speed scene
+        Main.sceneSwitcher.activate("speed");
+
+        // Register global key listener
+        try {
+            // Disable logger of global key listener library
+            java.util.logging.Logger libLogger = java.util.logging.Logger.getLogger(GlobalScreen.class.getPackage().getName());
+            libLogger.setLevel(Level.SEVERE);
+            libLogger.setUseParentHandlers(false);
+
+            GlobalScreen.registerNativeHook();
+            GlobalScreen.addNativeKeyListener(new KeyListener(this));
+        } catch (NativeHookException e) {
+            LOGGER.error("Could not register native hook. Exiting.");
+            System.exit(1);
+        }
+
         // Send initial handshake
         connection.send(Protocol.MESSAGES.HELLO(name));
     }
 
-    public String getPassword() {
-        return password;
+    public void close() {
+        if (connection != null)
+            connection.close();
     }
 }

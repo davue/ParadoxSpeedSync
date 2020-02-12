@@ -18,22 +18,22 @@
 
 package com.github.davue.pss.server;
 
-import org.jnativehook.GlobalScreen;
-import org.jnativehook.NativeHookException;
+import com.github.davue.pss.Main;
+import com.github.davue.pss.Protocol;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.List;
-import java.util.Scanner;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Level;
 
-public class Server extends Thread {
+public class Server implements Runnable {
     public final Logger LOGGER = LoggerFactory.getLogger("Server");
+
     /**
      * An atomic counter to get unique client id's.
      */
@@ -49,13 +49,20 @@ public class Server extends Thread {
     /**
      * The port of the server.
      */
-    private final int port;
+    public int port;
     /**
      * The password of the server, empty if no password.
      */
-    private final String password;
-    // The custom key binds
+    public String password;
+
+    /**
+     * The key code for the in-game speed up key.
+     */
     public int SPEED_UP_KEY;
+    /**
+     * The key code for the in-game speed down key.
+     */
+    public int SPEED_DOWN_KEY;
     /**
      * The speed of the host.
      */
@@ -63,7 +70,7 @@ public class Server extends Thread {
     /**
      * If the server is running.
      */
-    private boolean isRunning = true;
+    public boolean isRunning = true;
     /**
      * If the server is also the current host, this is true by default.
      */
@@ -72,72 +79,40 @@ public class Server extends Thread {
      * The client which is the current host, null if the server is host.
      */
     private Connection host = null;
-    public int SPEED_DOWN_KEY;
 
-    public Server(int port) {
-        this(port, "");
-    }
-
-    public Server(int port, String password) {
-        this.port = port;
-        this.password = password;
+    public Server() {
         this.speedNegotiator = new SpeedNegotiator(this, connections);
-        KeyListener keyListener = new KeyListener(this);
-
-        // Register global key listener
-        try {
-            // Disable logger of global key listener library
-            java.util.logging.Logger libLogger = java.util.logging.Logger.getLogger(GlobalScreen.class.getPackage().getName());
-            libLogger.setLevel(Level.SEVERE);
-            libLogger.setUseParentHandlers(false);
-
-            GlobalScreen.registerNativeHook();
-            GlobalScreen.addNativeKeyListener(keyListener);
-        } catch (NativeHookException e) {
-            LOGGER.error("Could not register native hook. Exiting.");
-            System.exit(1);
-        }
-
-        // Initialize key bindings
-        try {
-            Scanner scanner = new Scanner(System.in);
-
-            System.out.print("Please enter the speed up key.\n" +
-                    "This is the key, the server will simulate to speed up in-game.\n" +
-                    "Press the key and then ENTER: ");
-            scanner.nextLine();
-            Thread.sleep(200);
-            this.SPEED_UP_KEY = keyListener.getSecondLastKey();
-            LOGGER.debug("Registered SPEED_UP to: {}", SPEED_UP_KEY);
-
-            System.out.print("Please enter the speed down key.\n" +
-                    "This is the key, the server will simulate to speed down in-game.\n" +
-                    "Press the key and then ENTER: ");
-            scanner.nextLine();
-            Thread.sleep(200);
-            this.SPEED_DOWN_KEY = keyListener.getSecondLastKey();
-            LOGGER.debug("Registered SPEED_DOWN to: {}", SPEED_DOWN_KEY);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            System.exit(1);
-        }
     }
 
     @Override
     public void run() {
+        if (port == 0) {
+            port = Protocol.DEFAULT_PORT;
+        }
+
         ServerSocket serverSocket = null;
         try {
             serverSocket = new ServerSocket(port);
         } catch (IOException e) {
             e.printStackTrace();
+            if (e instanceof BindException) {
+                Main.showError("Port already in use");
+            }
+            isRunning = false;
+            return;
         }
 
         LOGGER.info("Server started. Waiting for connections on port {}.", port);
 
-        while (isRunning && serverSocket != null) {
+        while (isRunning) {
             // Wait for connection
             try {
                 Socket socket = serverSocket.accept();
+
+                if (!isRunning) {
+                    socket.close();
+                    break;
+                }
 
                 // Start new thread for connection handling
                 Connection newConnection = new Connection(this, socket);
@@ -154,15 +129,6 @@ public class Server extends Thread {
                 connection.close();
             }
         }
-    }
-
-    /**
-     * Returns the password of the server.
-     *
-     * @return The password.
-     */
-    public String getPassword() {
-        return password;
     }
 
     /**
@@ -186,5 +152,14 @@ public class Server extends Thread {
      */
     public void close() {
         isRunning = false;
+
+        // Gracefully close all connections if server wants to stop
+        for (Connection connection : connections) {
+            if (connection.isConnected()) {
+                connection.close();
+            }
+        }
+
+        connections.clear();
     }
 }

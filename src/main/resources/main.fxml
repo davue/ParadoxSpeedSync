@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!--
+  ~ A cross-platform tool to overcome the limitations of the speed controls of Paradox Interactive games.
+  ~ Copyright (C) 2020 David Enderlin
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -20,7 +38,8 @@
                     <children>
                         <Button fx:id="settingsButton" focusTraversable="false" maxHeight="-Infinity"
                                 maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
-                                prefHeight="20.0" prefWidth="20.0" styleClass="icon-button" text="S">
+                                onAction="#openSettings" prefHeight="20.0" prefWidth="20.0" styleClass="icon-button"
+                                text="S">
                             <graphic>
                                 <Region>
                                     <styleClass>
@@ -30,10 +49,9 @@
                                 </Region>
                             </graphic>
                         </Button>
-                        <Button fx:id="closeButton" cancelButton="true" onAction="#close" focusTraversable="false"
-                                maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-                                mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" styleClass="icon-button"
-                                text="X">
+                        <Button fx:id="closeButton" cancelButton="true" focusTraversable="false" maxHeight="-Infinity"
+                                maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
+                                onAction="#close" prefHeight="20.0" prefWidth="20.0" styleClass="icon-button" text="X">
                             <graphic>
                                 <Region>
                                     <styleClass>
@@ -58,7 +76,14 @@
                         <Insets bottom="5.0" left="5.0" right="5.0"/>
                     </HBox.margin>
                 </PasswordField>
-                <fx:include fx:id="dragPane" source="dragpane.fxml"/>
+                <HBox>
+                    <children>
+                        <fx:include fx:id="dragPane" source="dragpane.fxml"/>
+                    </children>
+                    <HBox.margin>
+                        <Insets right="5.0"/>
+                    </HBox.margin>
+                </HBox>
             </children>
         </HBox>
         <HBox styleClass="head">
@@ -86,7 +111,7 @@
         <HBox fx:id="messageBox">
             <children>
                 <Region HBox.hgrow="ALWAYS"/>
-                <Label styleClass="label-error" text="Wrong password"/>
+                <Label fx:id="message" styleClass="label-error" text="Wrong password"/>
                 <Region HBox.hgrow="ALWAYS"/>
             </children>
             <padding>

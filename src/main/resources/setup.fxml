@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ A cross-platform tool to overcome the limitations of the speed controls of Paradox Interactive games.
+  ~ Copyright (C) 2020 David Enderlin
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.String?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+      minWidth="-Infinity" prefWidth="174.0" styleClass="body" stylesheets="@pss.css"
+      xmlns="http://javafx.com/javafx/11.0.1" fx:controller="com.github.davue.pss.ui.SetupController">
+    <children>
+        <HBox styleClass="head">
+            <children>
+                <HBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+                    <children>
+                        <Label style="-fx-font-size: 14;" text="Keybind Setup"/>
+                    </children>
+                    <HBox.margin>
+                        <Insets left="5.0"/>
+                    </HBox.margin>
+                </HBox>
+                <HBox alignment="CENTER_RIGHT" prefHeight="30.0" spacing="1.0">
+                    <children>
+                        <fx:include source="dragpane.fxml"/>
+                        <Button cancelButton="true" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity"
+                                minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#close"
+                                prefHeight="20.0" prefWidth="20.0" styleClass="icon-button" text="X">
+                            <graphic>
+                                <Region>
+                                    <styleClass>
+                                        <String fx:value="icon"/>
+                                        <String fx:value="close-icon"/>
+                                    </styleClass>
+                                </Region>
+                            </graphic>
+                        </Button>
+                    </children>
+                    <padding>
+                        <Insets left="5.0" right="5.0"/>
+                    </padding>
+                </HBox>
+            </children>
+        </HBox>
+        <VBox>
+            <children>
+                <HBox styleClass="body">
+                    <children>
+                        <HBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+                            <children>
+                                <Label text="Speed up key"/>
+                            </children>
+                        </HBox>
+                        <Button fx:id="clientSpeedUp" mnemonicParsing="false" onKeyReleased="#handleKeyBind"
+                                prefWidth="41.0" text=" "/>
+                    </children>
+                    <VBox.margin>
+                        <Insets left="5.0" right="5.0" top="5.0"/>
+                    </VBox.margin>
+                </HBox>
+                <HBox styleClass="body">
+                    <children>
+                        <HBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+                            <children>
+                                <Label text="Speed down key"/>
+                            </children>
+                        </HBox>
+                        <Button fx:id="clientSpeedDown" mnemonicParsing="false" onKeyReleased="#handleKeyBind"
+                                prefWidth="41.0" text=" "/>
+                    </children>
+                    <VBox.margin>
+                        <Insets left="5.0" right="5.0" top="5.0"/>
+                    </VBox.margin>
+                </HBox>
+                <HBox styleClass="body">
+                    <children>
+                        <HBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+                            <children>
+                                <Label text="Sync key"/>
+                            </children>
+                        </HBox>
+                        <Button fx:id="clientSync" mnemonicParsing="false" onKeyReleased="#handleKeyBind"
+                                prefWidth="41.0" text=" "/>
+                    </children>
+                    <VBox.margin>
+                        <Insets left="5.0" right="5.0" top="5.0"/>
+                    </VBox.margin>
+                </HBox>
+            </children>
+            <padding>
+                <Insets bottom="5.0"/>
+            </padding>
+        </VBox>
+        <VBox>
+            <children>
+                <HBox styleClass="body">
+                    <children>
+                        <HBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+                            <children>
+                                <Label text="In-game speed up key">
+                                    <HBox.margin>
+                                        <Insets/>
+                                    </HBox.margin>
+                                </Label>
+                            </children>
+                        </HBox>
+                        <Button fx:id="serverSpeedUp" mnemonicParsing="false" onKeyReleased="#handleKeyBind"
+                                prefWidth="41.0" text=" "/>
+                    </children>
+                    <VBox.margin>
+                        <Insets left="5.0" right="5.0" top="5.0"/>
+                    </VBox.margin>
+                </HBox>
+                <HBox styleClass="body">
+                    <children>
+                        <HBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+                            <children>
+                                <Label text="In-game slow down key"/>
+                            </children>
+                        </HBox>
+                        <Button fx:id="serverSpeedDown" mnemonicParsing="false" onKeyReleased="#handleKeyBind"
+                                prefWidth="41.0" text=" "/>
+                    </children>
+                    <VBox.margin>
+                        <Insets left="5.0" right="5.0" top="5.0"/>
+                    </VBox.margin>
+                </HBox>
+            </children>
+            <padding>
+                <Insets bottom="5.0"/>
+            </padding>
+        </VBox>
+        <HBox>
+            <VBox.margin>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+            </VBox.margin>
+            <children>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button defaultButton="true" mnemonicParsing="false" onAction="#start" prefWidth="41.0" text="Save"/>
+            </children>
+        </HBox>
+    </children>
+</VBox>

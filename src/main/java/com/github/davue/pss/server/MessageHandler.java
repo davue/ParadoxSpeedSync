@@ -48,7 +48,7 @@ public class MessageHandler {
                     break;
                 }
 
-                if (connection.getServer().getPassword().isEmpty()) {
+                if (connection.getServer().password.isEmpty()) {
                     connection.getServer().LOGGER.debug("Handshake from {}. Accept.", connection.getSocket().getInetAddress().getHostAddress());
                     connection.send(Protocol.MESSAGES.HELLO(server.nextClientID.getAndIncrement()));
                     connection.state = Connection.State.READY;
@@ -71,7 +71,7 @@ public class MessageHandler {
                     break;
                 }
 
-                if (connection.getServer().getPassword().equals(tokens[1])) {
+                if (connection.getServer().password.equals(tokens[1])) {
                     connection.getServer().LOGGER.debug("Received correct PASS from {}. Accept.", connection.getSocket().getInetAddress().getHostAddress());
                     connection.send(Protocol.MESSAGES.HELLO(server.nextClientID.getAndIncrement()));
                     connection.state = Connection.State.READY;

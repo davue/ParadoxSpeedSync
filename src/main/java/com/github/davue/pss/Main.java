@@ -18,33 +18,103 @@
 
 package com.github.davue.pss;
 
+import com.github.davue.pss.client.Client;
+import com.github.davue.pss.server.Server;
+import com.github.davue.pss.ui.MainController;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Main extends Application {
+    public static final Logger LOGGER = LoggerFactory.getLogger("UI");
+
+    /**
+     * The main stage of the application.
+     */
     public static Stage window;
+
+    /**
+     * The scene switcher of the application.
+     */
+    public static SceneSwitcher sceneSwitcher;
+
+    /**
+     * The client of the application.
+     */
+    public static Client client;
+
+    /**
+     * The server of the application.
+     */
+    public static Server server;
+
+    /**
+     * The controller of the main scene.
+     */
+    public static MainController mainController;
 
     public static void main(String[] args) {
         launch();
+    }
+
+    public static void stopBackgroundTasks() {
+        client.close();
+        server.close();
+    }
+
+    /**
+     * Closes the client and server and switches back to the connection screen while showing an error message.
+     *
+     * @param message The message to show.
+     */
+    public static void showError(String message) {
+        stopBackgroundTasks();
+
+        Platform.runLater(() -> {
+            mainController.messageBox.setManaged(true);
+            mainController.messageBox.setVisible(true);
+            mainController.message.setText(message);
+            sceneSwitcher.activate("main");
+        });
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         window = primaryStage;
 
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/main.fxml"));
-        VBox root = loader.load();
-        Scene scene = new Scene(root);
+        // Load different scenes
+        Pane setup = FXMLLoader.load(getClass().getResource("/setup.fxml"));
+        Pane main = FXMLLoader.load(getClass().getResource("/main.fxml"));
+        Pane speed = FXMLLoader.load(getClass().getResource("/speed.fxml"));
+
+        client = new Client();
+        server = new Server();
+
+        Scene scene = new Scene(setup);
+        sceneSwitcher = new SceneSwitcher(primaryStage, scene);
+        sceneSwitcher.addRoot("setup", setup);
+        sceneSwitcher.addRoot("main", main);
+        sceneSwitcher.addRoot("speed", speed);
 
         primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setTitle("Paradox Speed Sync");
         primaryStage.setAlwaysOnTop(true);
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    @Override
+    public void stop() throws Exception {
+        super.stop();
+
+        window.close();
+
+        System.exit(0);
     }
 }

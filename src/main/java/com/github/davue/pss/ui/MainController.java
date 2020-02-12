@@ -18,12 +18,10 @@
 
 package com.github.davue.pss.ui;
 
+import com.github.davue.pss.Main;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -55,24 +53,65 @@ public class MainController {
     public HBox messageBox;
     @FXML
     public Pane dragPane;
+    public Label message;
+
+    @FXML
+    public void initialize() {
+        Platform.runLater(() -> root.requestFocus());
+
+        messageBox.setVisible(false);
+        messageBox.setManaged(false);
+        Main.mainController = this;
+    }
 
     @FXML
     public void connect() {
-        System.out.println("Connect was pressed.");
+        Main.client.hostname = addressField.getText();
+        Main.client.password = passwordField.getText().strip();
+        Main.client.name = nameField.getText().strip();
+
+        Main.client.start();
     }
 
     @FXML
     public void host() {
-        System.out.println("Host was pressed.");
+        try {
+            Main.server.port = Integer.parseInt(addressField.getText());
+        } catch (NumberFormatException e) {
+            if (!addressField.getText().strip().isEmpty()) {
+                Main.showError("Invalid port");
+            }
+        }
+
+        Main.server.password = passwordField.getText().strip();
+
+        new Thread(Main.server).start();
+
+        try {
+            Thread.sleep(400);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if (!Main.server.isRunning)
+            return;
+
+        Main.client.hostname = "127.0.0.1";
+        Main.client.port = Main.server.port;
+        Main.client.password = passwordField.getText().strip();
+        Main.client.name = nameField.getText().strip();
+
+        Main.client.start();
     }
 
     @FXML
     void openSettings() {
-
+        Main.sceneSwitcher.activate("setup");
     }
 
     @FXML
     public void close() {
+        Main.stopBackgroundTasks();
         Platform.exit();
     }
 }

@@ -18,6 +18,7 @@
 
 package com.github.davue.pss.client;
 
+import com.github.davue.pss.Main;
 import com.github.davue.pss.Protocol;
 
 /**
@@ -51,23 +52,23 @@ public class MessageHandler {
             case Protocol.MESSAGES.PASS:
                 client.LOGGER.debug("Received PASS from {}. Password required.", connection.getSocket().getInetAddress().getHostAddress());
 
-                if (client.getPassword().isEmpty()) {
+                if (client.password.isEmpty()) {
                     client.LOGGER.info("Server requires password but no password was specified. Exiting.");
                     System.exit(1);
                 }
 
-                connection.send(Protocol.MESSAGES.PASS(client.getPassword()));
+                connection.send(Protocol.MESSAGES.PASS(client.password));
                 connection.state = Connection.State.INIT;
                 break;
             case Protocol.MESSAGES.DENIED:
                 client.LOGGER.debug("Received DENIED from {}. Password required.", connection.getSocket().getInetAddress().getHostAddress());
-                System.exit(1);
                 connection.state = Connection.State.INIT;
+                Main.showError("Wrong password");
                 break;
             case Protocol.MESSAGES.CLOSE:
                 client.LOGGER.debug("Server at {} closes connection.", connection.getSocket().getInetAddress().getHostAddress());
                 connection.state = Connection.State.DISCONNECTED;
-                // TODO: Handle this correctly
+                Main.showError("Connection closed");
                 break;
             default:
                 client.LOGGER.warn("Received unknown message: {}", msg);

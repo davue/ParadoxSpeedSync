@@ -31,6 +31,11 @@ public class Protocol {
     public static final short MAX_SPEED = 5;
 
     /**
+     * The default port of the protocol.
+     */
+    public static final int DEFAULT_PORT = 15188;
+
+    /**
      * Specifies all messages the protocol understands.
      * A message always consists of a CMD followed by some arguments if needed and is terminated with a newline.
      */
