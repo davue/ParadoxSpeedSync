@@ -26,6 +26,7 @@ import javafx.scene.layout.Pane;
 public class DragPaneController {
     @FXML
     public Pane dragPane;
+    
     private double xStart = 0;
     private double yStart = 0;
     private double xWindowStart = 0;

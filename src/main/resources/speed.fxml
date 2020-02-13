@@ -19,63 +19,73 @@
   -->
 
 <?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-      minWidth="-Infinity"
-      prefWidth="174.0" styleClass="body" stylesheets="@pss.css"
-      xmlns="http://javafx.com/javafx/11.0.1">
+<?import java.lang.String?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.davue.pss.ui.SpeedController" maxHeight="-Infinity"
+      maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="174.0" styleClass="body"
+      stylesheets="@pss.css" xmlns="http://javafx.com/javafx/11.0.1">
     <children>
         <HBox styleClass="head">
             <children>
-                <FlowPane alignment="CENTER_LEFT" prefWrapLength="0.0" HBox.hgrow="NEVER">
+                <HBox fx:id="selfSpeed" alignment="CENTER_LEFT" prefHeight="30.0">
                     <children>
-                        <HBox alignment="CENTER_LEFT" prefHeight="30.0">
-                            <children>
-                                <Rectangle height="20.0" strokeType="INSIDE" styleClass="rectangle" width="20.0"/>
-                                <Rectangle height="20.0" strokeType="INSIDE" styleClass="rectangle-red" width="20.0">
-                                    <HBox.margin>
-                                        <Insets left="-1.0"/>
-                                    </HBox.margin>
-                                </Rectangle>
-                                <Rectangle height="20.0" strokeType="INSIDE" styleClass="rectangle-green" width="20.0">
-                                    <HBox.margin>
-                                        <Insets left="-1.0"/>
-                                    </HBox.margin>
-                                </Rectangle>
-                                <Rectangle height="20.0" strokeType="INSIDE" styleClass="rectangle" width="20.0">
-                                    <HBox.margin>
-                                        <Insets left="-1.0"/>
-                                    </HBox.margin>
-                                </Rectangle>
-                                <Rectangle height="20.0" strokeType="INSIDE" styleClass="rectangle" width="20.0">
-                                    <HBox.margin>
-                                        <Insets left="-1.0"/>
-                                    </HBox.margin>
-                                </Rectangle>
-                            </children>
-                            <FlowPane.margin>
-                                <Insets/>
-                            </FlowPane.margin>
-                            <padding>
-                                <Insets left="5.0"/>
-                            </padding>
-                        </HBox>
+                        <Rectangle height="20.0" strokeType="INSIDE" styleClass="rectangle" width="20.0"/>
+                        <Rectangle height="20.0" strokeType="INSIDE" styleClass="rectangle" width="20.0">
+                            <HBox.margin>
+                                <Insets left="-1.0"/>
+                            </HBox.margin>
+                        </Rectangle>
+                        <Rectangle height="20.0" strokeType="INSIDE" styleClass="rectangle" width="20.0">
+                            <HBox.margin>
+                                <Insets left="-1.0"/>
+                            </HBox.margin>
+                        </Rectangle>
+                        <Rectangle height="20.0" strokeType="INSIDE" styleClass="rectangle" width="20.0">
+                            <HBox.margin>
+                                <Insets left="-1.0"/>
+                            </HBox.margin>
+                        </Rectangle>
+                        <Rectangle height="20.0" strokeType="INSIDE" styleClass="rectangle" width="20.0">
+                            <HBox.margin>
+                                <Insets left="-1.0"/>
+                            </HBox.margin>
+                        </Rectangle>
                     </children>
-                </FlowPane>
+                    <padding>
+                        <Insets left="5.0"/>
+                    </padding>
+                </HBox>
                 <Region HBox.hgrow="ALWAYS"/>
                 <HBox alignment="CENTER_RIGHT" prefHeight="30.0" spacing="1.0" HBox.hgrow="NEVER">
                     <children>
-                        <Button focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity"
+                        <fx:include source="dragpane.fxml"/>
+                        <Button onAction="#openSettings" focusTraversable="false" maxHeight="-Infinity"
+                                maxWidth="-Infinity"
                                 minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="20.0"
-                                prefWidth="20.0" text="+"/>
-                        <Button focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity"
+                                prefWidth="20.0" styleClass="icon-button" text="S">
+                            <graphic>
+                                <Region prefHeight="200.0" prefWidth="200.0">
+                                    <styleClass>
+                                        <String fx:value="icon"/>
+                                        <String fx:value="settings-icon"/>
+                                    </styleClass>
+                                </Region>
+                            </graphic>
+                        </Button>
+                        <Button onAction="#close" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity"
                                 minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="20.0"
-                                prefWidth="20.0" text="S"/>
-                        <Button focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity"
-                                minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="20.0"
-                                prefWidth="20.0" text="X"/>
+                                prefWidth="20.0" styleClass="icon-button" text="X">
+                            <graphic>
+                                <Region prefHeight="200.0" prefWidth="200.0">
+                                    <styleClass>
+                                        <String fx:value="icon"/>
+                                        <String fx:value="close-icon"/>
+                                    </styleClass>
+                                </Region>
+                            </graphic>
+                        </Button>
                     </children>
                     <padding>
                         <Insets left="5.0" right="5.0"/>
@@ -83,125 +93,5 @@
                 </HBox>
             </children>
         </HBox>
-        <FlowPane alignment="CENTER_LEFT" prefWrapLength="174.0">
-            <children>
-                <HBox alignment="CENTER_LEFT" prefHeight="30.0">
-                    <children>
-                        <Rectangle height="20.0" strokeType="INSIDE" styleClass="rectangle" width="20.0"/>
-                        <Rectangle height="20.0" strokeType="INSIDE" styleClass="rectangle-red" width="20.0">
-                            <HBox.margin>
-                                <Insets left="-1.0"/>
-                            </HBox.margin>
-                        </Rectangle>
-                        <Rectangle height="20.0" strokeType="INSIDE" styleClass="rectangle" width="20.0">
-                            <HBox.margin>
-                                <Insets left="-1.0"/>
-                            </HBox.margin>
-                        </Rectangle>
-                        <Rectangle height="20.0" strokeType="INSIDE" styleClass="rectangle" width="20.0">
-                            <HBox.margin>
-                                <Insets left="-1.0"/>
-                            </HBox.margin>
-                        </Rectangle>
-                        <Rectangle height="20.0" strokeType="INSIDE" styleClass="rectangle" width="20.0">
-                            <HBox.margin>
-                                <Insets left="-1.0"/>
-                            </HBox.margin>
-                        </Rectangle>
-                    </children>
-                    <FlowPane.margin>
-                        <Insets/>
-                    </FlowPane.margin>
-                    <padding>
-                        <Insets left="5.0"/>
-                    </padding>
-                </HBox>
-                <Label maxWidth="72.0" text="Jerry">
-                    <padding>
-                        <Insets left="5.0"/>
-                    </padding>
-                </Label>
-            </children>
-        </FlowPane>
-        <FlowPane alignment="CENTER_LEFT" prefWrapLength="174.0">
-            <children>
-                <HBox alignment="CENTER_LEFT" prefHeight="30.0">
-                    <children>
-                        <Rectangle height="20.0" strokeType="INSIDE" styleClass="rectangle" width="20.0"/>
-                        <Rectangle height="20.0" strokeType="INSIDE" styleClass="rectangle" width="20.0">
-                            <HBox.margin>
-                                <Insets left="-1.0"/>
-                            </HBox.margin>
-                        </Rectangle>
-                        <Rectangle height="20.0" strokeType="INSIDE" styleClass="rectangle" width="20.0">
-                            <HBox.margin>
-                                <Insets left="-1.0"/>
-                            </HBox.margin>
-                        </Rectangle>
-                        <Rectangle height="20.0" strokeType="INSIDE" styleClass="rectangle-green" width="20.0">
-                            <HBox.margin>
-                                <Insets left="-1.0"/>
-                            </HBox.margin>
-                        </Rectangle>
-                        <Rectangle height="20.0" strokeType="INSIDE" styleClass="rectangle" width="20.0">
-                            <HBox.margin>
-                                <Insets left="-1.0"/>
-                            </HBox.margin>
-                        </Rectangle>
-                    </children>
-                    <FlowPane.margin>
-                        <Insets/>
-                    </FlowPane.margin>
-                    <padding>
-                        <Insets left="5.0"/>
-                    </padding>
-                </HBox>
-                <Label maxWidth="72.0" text="Uncle Phil">
-                    <padding>
-                        <Insets left="5.0" right="5.0"/>
-                    </padding>
-                </Label>
-            </children>
-        </FlowPane>
-        <FlowPane alignment="CENTER_LEFT" prefWrapLength="174.0">
-            <children>
-                <HBox alignment="CENTER_LEFT" prefHeight="30.0">
-                    <children>
-                        <Rectangle height="20.0" strokeType="INSIDE" styleClass="rectangle" width="20.0"/>
-                        <Rectangle height="20.0" strokeType="INSIDE" styleClass="rectangle" width="20.0">
-                            <HBox.margin>
-                                <Insets left="-1.0"/>
-                            </HBox.margin>
-                        </Rectangle>
-                        <Rectangle height="20.0" strokeType="INSIDE" styleClass="rectangle-green" width="20.0">
-                            <HBox.margin>
-                                <Insets left="-1.0"/>
-                            </HBox.margin>
-                        </Rectangle>
-                        <Rectangle height="20.0" strokeType="INSIDE" styleClass="rectangle" width="20.0">
-                            <HBox.margin>
-                                <Insets left="-1.0"/>
-                            </HBox.margin>
-                        </Rectangle>
-                        <Rectangle height="20.0" strokeType="INSIDE" styleClass="rectangle" width="20.0">
-                            <HBox.margin>
-                                <Insets left="-1.0"/>
-                            </HBox.margin>
-                        </Rectangle>
-                    </children>
-                    <FlowPane.margin>
-                        <Insets/>
-                    </FlowPane.margin>
-                    <padding>
-                        <Insets left="5.0"/>
-                    </padding>
-                </HBox>
-                <Label maxWidth="72.0" text="A Long Name">
-                    <padding>
-                        <Insets left="5.0"/>
-                    </padding>
-                </Label>
-            </children>
-        </FlowPane>
     </children>
 </VBox>

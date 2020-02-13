@@ -20,6 +20,8 @@ package com.github.davue.pss.client;
 
 import com.github.davue.pss.Main;
 import com.github.davue.pss.Protocol;
+import com.github.davue.pss.ui.SpeedController;
+import javafx.application.Platform;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 import org.slf4j.Logger;
@@ -72,9 +74,15 @@ public class Client {
      */
     public int id = 0;
 
+    /**
+     * The speed controller of the client itself.
+     */
+    public SpeedController speedController;
+
     public void speedUp() {
         if (currentSpeed < Protocol.MAX_SPEED) {
             currentSpeed++;
+            Platform.runLater(() -> speedController.showSpeed(currentSpeed));
 
             connection.send(Protocol.MESSAGES.SPEED(currentSpeed));
         } else {
@@ -85,6 +93,7 @@ public class Client {
     public void speedDown() {
         if (currentSpeed > Protocol.MIN_SPEED) {
             currentSpeed--;
+            Platform.runLater(() -> speedController.showSpeed(currentSpeed));
 
             connection.send(Protocol.MESSAGES.SPEED(currentSpeed));
         } else {

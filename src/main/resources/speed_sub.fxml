@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<HBox xmlns:fx="http://javafx.com/fxml/1" alignment="CENTER_LEFT" xmlns="http://javafx.com/javafx/11.0.1">
+   <children>
+      <HBox alignment="CENTER_LEFT" prefHeight="30.0">
+         <children>
+            <Rectangle height="20.0" strokeType="INSIDE" styleClass="rectangle" width="20.0"/>
+            <Rectangle height="20.0" strokeType="INSIDE" styleClass="rectangle" width="20.0">
+               <HBox.margin>
+                  <Insets left="-1.0"/>
+               </HBox.margin>
+            </Rectangle>
+            <Rectangle height="20.0" strokeType="INSIDE" styleClass="rectangle" width="20.0">
+               <HBox.margin>
+                  <Insets left="-1.0"/>
+               </HBox.margin>
+            </Rectangle>
+            <Rectangle height="20.0" strokeType="INSIDE" styleClass="rectangle" width="20.0">
+               <HBox.margin>
+                  <Insets left="-1.0"/>
+               </HBox.margin>
+            </Rectangle>
+            <Rectangle height="20.0" strokeType="INSIDE" styleClass="rectangle" width="20.0">
+               <HBox.margin>
+                  <Insets left="-1.0"/>
+               </HBox.margin>
+            </Rectangle>
+         </children>
+         <padding>
+            <Insets left="5.0"/>
+         </padding>
+      </HBox>
+      <Label maxWidth="72.0" text="CLIENT_NAME">
+         <padding>
+            <Insets left="5.0"/>
+         </padding>
+      </Label>
+   </children>
+</HBox>

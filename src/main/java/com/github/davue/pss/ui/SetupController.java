@@ -27,11 +27,17 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 
 public class SetupController {
+    @FXML
     public VBox root;
+    @FXML
     public Button clientSpeedUp;
+    @FXML
     public Button clientSpeedDown;
+    @FXML
     public Button clientSync;
+    @FXML
     public Button serverSpeedUp;
+    @FXML
     public Button serverSpeedDown;
 
     @FXML
@@ -39,15 +45,18 @@ public class SetupController {
         Platform.runLater(() -> root.requestFocus());
     }
 
+    @FXML
     public void start(ActionEvent actionEvent) {
         Main.sceneSwitcher.back();
     }
 
+    @FXML
     public void close(ActionEvent actionEvent) {
         Main.stopBackgroundTasks();
         Platform.exit();
     }
 
+    @FXML
     public void handleKeyBind(KeyEvent keyEvent) {
         Button sourceButton = ((Button) keyEvent.getSource());
 
