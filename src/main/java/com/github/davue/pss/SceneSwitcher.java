@@ -23,6 +23,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import org.jnativehook.GlobalScreen;
+import org.jnativehook.NativeHookException;
 
 import java.util.HashMap;
 
@@ -56,9 +58,28 @@ public class SceneSwitcher {
         main.setRoot(lastPane);
         stage.sizeToScene();
         lastPane.requestFocus();
+
+        try {
+            // Only re-register native hook if the client is connected
+            if (!Main.client.hostname.equals("")) {
+                GlobalScreen.registerNativeHook();
+            }
+        } catch (NativeHookException e) {
+            e.printStackTrace();
+            Platform.exit();
+        }
     }
 
     public void activate(String name) {
+        if (name.equals("setup")) {
+            try {
+                GlobalScreen.unregisterNativeHook();
+            } catch (NativeHookException e) {
+                e.printStackTrace();
+                Platform.exit();
+            }
+        }
+
         Platform.runLater(() -> {
             lastPane = main.getRoot();
 
