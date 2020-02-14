@@ -1,4 +1,4 @@
-# ParadoxSpeedSync
+# ParadoxSpeedSync [![Jenkins](https://jenkins.stammgruppe.eu/job/ParadoxSpeedSync/job/master/badge/icon)](https://jenkins.stammgruppe.eu/blue/organizations/jenkins/ParadoxSpeedSync/activity?branch=master)
 A cross-platform tool to overcome the limitations of the speed controls of Paradox Interactive games.
 
 ## What
@@ -23,6 +23,11 @@ After connecting, it will look like this:
 ![](https://raw.githubusercontent.com/davue/ParadoxSpeedSync/master/images/running.gif)
 
 Your own speed is on top while all other clients are below. A red client shows you that this client is running slower than you.
+
+## Download
+You can either:
+* Get the latest master build directly from [Jenkins](https://jenkins.stammgruppe.eu/job/ParadoxSpeedSync/job/master/lastSuccessfulBuild/artifact/target/ParadoxSpeedSync.jar).
+* Or get the latest release here from GitHub.
 
 ## Troubleshooting
 * If the game won't speed down even if all clients are below current game speed, just press the sync key.
