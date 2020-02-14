@@ -22,7 +22,7 @@ After connecting, it will look like this:
 
 ![](https://raw.githubusercontent.com/davue/ParadoxSpeedSync/master/images/running.gif)
 
-Your own speed is on top while all other clients are below.
+Your own speed is on top while all other clients are below. A red client shows you that this client is running slower than you.
 
 ## Troubleshooting
 * If the game won't speed down even if all clients are below current game speed, just press the sync key.
