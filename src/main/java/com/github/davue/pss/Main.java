@@ -28,6 +28,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.jnativehook.GlobalScreen;
+import org.jnativehook.NativeHookException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -75,6 +77,14 @@ public class Main extends Application {
      */
     public static void showError(String message) {
         stopBackgroundTasks();
+
+        // Stop capturing keystrokes if an error occurred
+        try {
+            GlobalScreen.unregisterNativeHook();
+        } catch (NativeHookException e) {
+            e.printStackTrace();
+            Platform.exit();
+        }
 
         Platform.runLater(() -> {
             mainController.messageBox.setManaged(true);

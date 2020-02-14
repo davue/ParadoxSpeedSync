@@ -79,6 +79,12 @@ public class Client {
      */
     public SpeedController speedController;
 
+    /**
+     * If the key listener is registered.
+     * This is used to prevent double registration.
+     */
+    public boolean isKeyListenerRegistered = false;
+
     public void speedUp() {
         if (currentSpeed < Protocol.MAX_SPEED) {
             currentSpeed++;
@@ -126,13 +132,17 @@ public class Client {
 
         // Register global key listener
         try {
-            // Disable logger of global key listener library
-            java.util.logging.Logger libLogger = java.util.logging.Logger.getLogger(GlobalScreen.class.getPackage().getName());
-            libLogger.setLevel(Level.SEVERE);
-            libLogger.setUseParentHandlers(false);
+            if (!isKeyListenerRegistered) {
+                // Disable logger of global key listener library
+                java.util.logging.Logger libLogger = java.util.logging.Logger.getLogger(GlobalScreen.class.getPackage().getName());
+                libLogger.setLevel(Level.SEVERE);
+                libLogger.setUseParentHandlers(false);
+
+                GlobalScreen.addNativeKeyListener(new KeyListener(this));
+                isKeyListenerRegistered = true;
+            }
 
             GlobalScreen.registerNativeHook();
-            GlobalScreen.addNativeKeyListener(new KeyListener(this));
         } catch (NativeHookException e) {
             LOGGER.error("Could not register native hook. Exiting.");
             System.exit(1);
