@@ -21,7 +21,6 @@ package com.github.davue.pss.client;
 import com.github.davue.pss.Main;
 import com.github.davue.pss.Protocol;
 import com.github.davue.pss.ui.SpeedController;
-import javafx.application.Platform;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 import org.slf4j.Logger;
@@ -48,11 +47,6 @@ public class Client {
      * The password the client will use to connect.
      */
     public String password = "";
-
-    /**
-     * The clients current speed.
-     */
-    private int currentSpeed = 1;
     /**
      * The host the client will connect to.
      */
@@ -66,29 +60,35 @@ public class Client {
      */
     public String name = "CLIENT_NAME";
     /**
-     * The connection of the client to the server
-     */
-    private Connection connection;
-    /**
      * The unique ID of the client assigned by the server.
      */
     public int id = 0;
-
     /**
      * The speed controller of the client itself.
      */
     public SpeedController speedController;
-
     /**
      * If the key listener is registered.
      * This is used to prevent double registration.
      */
     public boolean isKeyListenerRegistered = false;
+    /**
+     * The clients current speed.
+     */
+    private int currentSpeed = 1;
+    /**
+     * The connection of the client to the server
+     */
+    private Connection connection;
+
+    public int getSpeed() {
+        return currentSpeed;
+    }
 
     public void speedUp() {
         if (currentSpeed < Protocol.MAX_SPEED) {
             currentSpeed++;
-            Platform.runLater(() -> speedController.showSpeed(currentSpeed));
+            ClientManager.redraw();
 
             connection.send(Protocol.MESSAGES.SPEED(currentSpeed));
         } else {
@@ -99,7 +99,7 @@ public class Client {
     public void speedDown() {
         if (currentSpeed > Protocol.MIN_SPEED) {
             currentSpeed--;
-            Platform.runLater(() -> speedController.showSpeed(currentSpeed));
+            ClientManager.redraw();
 
             connection.send(Protocol.MESSAGES.SPEED(currentSpeed));
         } else {

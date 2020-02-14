@@ -10,7 +10,7 @@
       <fx:reference source="controller"/>
    </userData>
    <children>
-      <HBox fx:id="speed" alignment="CENTER_LEFT" prefHeight="30.0">
+      <HBox fx:id="speedBox" alignment="CENTER_LEFT" prefHeight="30.0">
          <children>
             <Rectangle height="20.0" strokeType="INSIDE" styleClass="rectangle" width="20.0"/>
             <Rectangle height="20.0" strokeType="INSIDE" styleClass="rectangle" width="20.0">

@@ -18,8 +18,6 @@
 
 package com.github.davue.pss.server;
 
-import com.github.davue.pss.Protocol;
-
 import java.awt.*;
 import java.util.List;
 

@@ -29,30 +29,67 @@ import javafx.scene.layout.HBox;
 
 public class SpeedController {
     @FXML
-    public HBox speed;
+    private HBox speedBox;
     @FXML
-    public Label name;
+    private Label name;
+
+    private int speed = 1;
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
 
     public void setName(String name) {
         Platform.runLater(() -> this.name.setText(name));
     }
 
-    public void showSpeed(int speed) {
-        ObservableList<Node> children = this.speed.getChildren();
+    public void setGreen(int speed, boolean clear) {
+        Platform.runLater(() -> {
+            ObservableList<Node> children = this.speedBox.getChildren();
 
-        for (int i = 0; i < children.size(); i++) {
-            if (i + 1 == speed) {
-                children.get(i).getStyleClass().add("rectangle-green");
-            } else {
-                children.get(i).getStyleClass().clear();
-                children.get(i).getStyleClass().add("rectangle");
+            for (int i = 0; i < children.size(); i++) {
+                if (i + 1 == speed) {
+                    children.get(i).getStyleClass().clear();
+                    children.get(i).getStyleClass().add("rectangle-green");
+                } else if (clear) {
+                    children.get(i).getStyleClass().clear();
+                    children.get(i).getStyleClass().add("rectangle");
+                }
             }
-        }
+        });
+    }
+
+    public void setGreen(int speed) {
+        setGreen(speed, true);
+    }
+
+    public void setRed(int speed, boolean clear) {
+        Platform.runLater(() -> {
+            ObservableList<Node> children = this.speedBox.getChildren();
+
+            for (int i = 0; i < children.size(); i++) {
+                if (i + 1 == speed) {
+                    children.get(i).getStyleClass().clear();
+                    children.get(i).getStyleClass().add("rectangle-red");
+                } else if (clear) {
+                    children.get(i).getStyleClass().clear();
+                    children.get(i).getStyleClass().add("rectangle");
+                }
+            }
+        });
+    }
+
+    public void setRed(int speed) {
+        setRed(speed, true);
     }
 
     @FXML
-    public void initialize() {
-        Platform.runLater(() -> showSpeed(1));
+    private void initialize() {
+        setGreen(1);
     }
 
     @FXML

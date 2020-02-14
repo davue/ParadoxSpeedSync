@@ -18,7 +18,6 @@
 
 package com.github.davue.pss.client;
 
-import com.github.davue.pss.Protocol;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
 

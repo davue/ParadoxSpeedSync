@@ -25,6 +25,7 @@ import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Manages the information about all other clients received from the server.
@@ -37,6 +38,28 @@ public class ClientManager {
         Main.sceneManager.removeClientPane(id);
     }
 
+    public static void redraw() {
+        int ownSpeed = Main.client.getSpeed();
+        int slowestSpeed = ownSpeed;
+        for (Map.Entry<Integer, SpeedController> client : clients.entrySet()) {
+            SpeedController controller = client.getValue();
+            int clientSpeed = controller.getSpeed();
+            if (clientSpeed < ownSpeed) {
+                controller.setRed(clientSpeed);
+            } else {
+                controller.setGreen(clientSpeed);
+            }
+
+            if (clientSpeed < slowestSpeed)
+                slowestSpeed = clientSpeed;
+        }
+
+        Main.client.speedController.setGreen(ownSpeed);
+        if (slowestSpeed < ownSpeed) {
+            Main.client.speedController.setRed(slowestSpeed, false);
+        }
+    }
+
     public static void update(int id, String name, int speed) {
         // If it's a new client
         if (!clients.containsKey(id)) {
@@ -46,14 +69,15 @@ public class ClientManager {
 
                 SpeedController controller = (SpeedController) speedPane.getUserData();
                 controller.setName(name);
-                controller.showSpeed(speed);
 
                 clients.put(id, controller);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else {
-            clients.get(id).showSpeed(speed);
         }
+
+        clients.get(id).setSpeed(speed);
+
+        redraw();
     }
 }
