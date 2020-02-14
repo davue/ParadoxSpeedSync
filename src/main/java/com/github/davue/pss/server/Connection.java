@@ -33,12 +33,16 @@ public class Connection extends Thread {
     /**
      * The speed the client of this connection wants to run.
      */
-    public volatile short clientSpeed = 0;
+    public volatile short clientSpeed = 1;
 
     /**
      * The current state of the connection to the client.
      */
     public State state = State.INIT;
+
+    public String name;
+
+    public int id;
 
     public Connection(Server server, Socket socket) {
         this.server = server;
@@ -74,10 +78,11 @@ public class Connection extends Thread {
                 messageHandler.handleMessage(line);
             }
         } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
             // Remove connection from server connection list on error
             server.connections.remove(this);
-
-            e.printStackTrace();
+            server.getSpeedNegotiator().check();
         }
     }
 

@@ -48,12 +48,20 @@ public class MessageHandler {
                     break;
                 }
 
+                if (tokens.length < 2) {
+                    connection.getServer().LOGGER.warn("Client at {} sent HELLO without name.", connection.getSocket().getInetAddress().getHostAddress());
+                    break;
+                }
+
                 if (connection.getServer().password.isEmpty()) {
                     connection.getServer().LOGGER.debug("Handshake from {}. Accept.", connection.getSocket().getInetAddress().getHostAddress());
-                    connection.send(Protocol.MESSAGES.HELLO(server.nextClientID.getAndIncrement()));
+                    connection.name = tokens[1];
+                    connection.id = server.nextClientID.getAndIncrement();
+                    connection.send(Protocol.MESSAGES.HELLO(connection.id));
                     connection.state = Connection.State.READY;
                 } else {
                     connection.getServer().LOGGER.debug("Handshake from {}. Waiting for password.", connection.getSocket().getInetAddress().getHostAddress());
+                    connection.name = tokens[1];
                     connection.send(Protocol.MESSAGES.PASS);
                     connection.state = Connection.State.WAITING_FOR_PASS;
                 }
@@ -73,7 +81,8 @@ public class MessageHandler {
 
                 if (connection.getServer().password.equals(tokens[1])) {
                     connection.getServer().LOGGER.debug("Received correct PASS from {}. Accept.", connection.getSocket().getInetAddress().getHostAddress());
-                    connection.send(Protocol.MESSAGES.HELLO(server.nextClientID.getAndIncrement()));
+                    connection.id = server.nextClientID.getAndIncrement();
+                    connection.send(Protocol.MESSAGES.HELLO(connection.id));
                     connection.state = Connection.State.READY;
                 } else {
                     connection.getServer().LOGGER.debug("Received incorrect PASS from {}. Sending DENIED.", connection.getSocket().getInetAddress().getHostAddress());
@@ -94,6 +103,14 @@ public class MessageHandler {
                 connection.clientSpeed = Short.parseShort(tokens[1]);
 
                 server.getSpeedNegotiator().check();
+
+                // Send updates to all clients but the sender of the update
+                for (Connection connection : server.connections) {
+                    if (!this.connection.equals(connection)) {
+                        connection.send(Protocol.MESSAGES.UPDATE(connection.id, connection.clientSpeed, connection.name));
+                    }
+                }
+
                 break;
             case Protocol.MESSAGES.SYNC:
                 if (connection.state != Connection.State.READY) {

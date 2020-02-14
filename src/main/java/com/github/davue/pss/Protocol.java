@@ -108,6 +108,12 @@ public class Protocol {
             return SPEED + " " + speed;
         }
 
+        public static final String UPDATE = "UPDATE";
+
+        public static String UPDATE(int id, int speed, String name) {
+            return UPDATE + " " + id + " " + speed + " " + name;
+        }
+
         /**
          * The RESET message sent to all clients on server reset.
          */

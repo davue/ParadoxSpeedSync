@@ -21,6 +21,8 @@ package com.github.davue.pss.client;
 import com.github.davue.pss.Main;
 import com.github.davue.pss.Protocol;
 
+import java.util.Arrays;
+
 /**
  * Handles all messages received from the server.
  */
@@ -65,6 +67,17 @@ public class MessageHandler {
                 connection.state = Connection.State.INIT;
                 Main.showError("Wrong password");
                 break;
+            case Protocol.MESSAGES.UPDATE:
+                if (tokens.length < 4) {
+                    client.LOGGER.warn("Received invalid UPDATE message.");
+                    break;
+                }
+
+                int id = Integer.parseInt(tokens[1]);
+                int speed = Integer.parseInt(tokens[2]);
+                String name = String.join(" ", Arrays.copyOfRange(tokens, 3, tokens.length));
+
+                client.LOGGER.debug("Received UPDATE for client {} ({}) with speed {}", id, name, speed);
             case Protocol.MESSAGES.CLOSE:
                 client.LOGGER.debug("Server at {} closes connection.", connection.getSocket().getInetAddress().getHostAddress());
                 connection.state = Connection.State.DISCONNECTED;
