@@ -13,6 +13,7 @@
     </properties>
 
     <build>
+        <finalName>ParadoxSpeedSync</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -64,13 +65,6 @@
     <dependencies>
         <dependency>
             <groupId>org.openjfx</groupId>
-            <artifactId>javafx-fxml</artifactId>
-            <version>13</version>
-        </dependency>
-
-        <!-- Libs for cross-platform packaging -->
-        <!--<dependency>
-            <groupId>org.openjfx</groupId>
             <artifactId>javafx-graphics</artifactId>
             <version>13</version>
             <classifier>win</classifier>
@@ -86,7 +80,13 @@
             <artifactId>javafx-graphics</artifactId>
             <version>13</version>
             <classifier>mac</classifier>
-        </dependency>-->
+        </dependency>
+
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>13</version>
+        </dependency>
 
         <dependency>
             <groupId>com.1stleg</groupId>

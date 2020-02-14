@@ -8,7 +8,7 @@ node {
 
         stage('Maven Build') {
             docker.image('maven:3-jdk-13').inside('-v /root/.m2:/root/.m2') {
-                sh 'mvn -B clean install'
+                sh 'mvn -B clean package'
             }
 
             archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
