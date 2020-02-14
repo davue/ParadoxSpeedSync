@@ -55,9 +55,9 @@ public class ClientManager {
         }
 
         Main.client.speedController.setGreen(ownSpeed);
-        if (slowestSpeed < ownSpeed) {
+        /*if (slowestSpeed < ownSpeed) {
             Main.client.speedController.setRed(slowestSpeed, false);
-        }
+        }*/
     }
 
     public static void update(int id, String name, int speed) {
