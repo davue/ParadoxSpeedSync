@@ -7,35 +7,30 @@ and I always thought that it would be a nice idea to simply run the game at the 
 you don't have to ask for permission all the time if you want to adjust the game speed.
 
 ## Usage
-Currently it is only a command line application, so you have to run it in your terminal. I'm planning to add a UI later.
+When you start the application you first have to setup the key bindings. You can still edit those later by clicking the settings button on top.
 
-### Client
-A client can connect to a server as follows:
-```
-java -jar ParadoxSpeedSync.jar -c <host> <port>
-```
-While starting a client, you will be asked to set up three key bindings:
-* A speed up key. This will be the key you press to suggest a speed increase.
-* A speed down key. This will be the key you press to suggest a speed decrease.
-* A sync key. Sometimes the actual in-game speed will go out of sync with the server speed, then you can press this key to force a re-sync.
+![](https://raw.githubusercontent.com/davue/ParadoxSpeedSync/master/images/setup.gif)
 
-Make sure that none of these keys conflict with in-game key bindings.
+* The first two are the buttons you will press to change your speed suggestion.
+* The sync key is a key you can press to force a speed re-sync with the game. This can be useful since the game can sometimes run at different speed than the server thinks it runs.
+* The last two are the keys of the speed controls in-game. If you are not hosting, you can skip this.
 
-### Host
-The host of the multiplayer session has to start a server using:
-```
-java -jar ParadoxSpeedSync.jar -s <port>
-```
-While starting a server, you will be asked to set up two key bindings:
-* The actual speed up key binding used in-game. This is the key the server will simulate when speeding up.
-* The actual speed down key binding used in-game. This is the key the server will simulate when slowing down.
+Then you can either connect to an already running server or host one yourself.  
+**Important:** At the moment the player which hosts the in-game session also has to host the speed sync server.
 
-Make sure that your server is reachable through the given port, you might need to set up port forwarding in your router settings.
-In addition to that, the host also has to connect to it's own server by starting a client as shown above.
+After connecting, it will look like this:
+
+![](https://raw.githubusercontent.com/davue/ParadoxSpeedSync/master/images/running.gif)
+
+Your own speed is on top while all other clients are below.
+
+## Troubleshooting
+* If the game won't speed down even if all clients are below current game speed, just press the sync key.
+* Make sure that your server is reachable through the given port, you might need to set up port forwarding in your router settings.
+* If you're hosting, do not use the in-game speed control key bindings for your client.
 
 ## Planned Features
-* Small UI to simplify setup
-* In-game overlay to see your current speed
+* Server does not try to control speed when game is out of focus
 * Dedicated server mode (such that the client that hosts the game can be on another device as the speed sync server)
 * Different speed agreement strategies
 
