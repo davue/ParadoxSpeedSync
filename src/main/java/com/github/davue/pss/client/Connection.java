@@ -113,6 +113,10 @@ public class Connection extends Thread {
         }
     }
 
+    public boolean isConnected() {
+        return socket != null && socket.isConnected() && !socket.isClosed();
+    }
+
     public enum State {
         DISCONNECTED, INIT, READY
     }

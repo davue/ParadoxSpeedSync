@@ -118,7 +118,7 @@ public class Client {
             }
         }
 
-        if (!connection.isAlive())
+        if (!connection.isConnected())
             return;
 
         // Client seems to be connected at this point so we can switch to the speed scene
