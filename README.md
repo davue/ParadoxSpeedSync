@@ -1,5 +1,5 @@
 # ParadoxSpeedSync [![Jenkins](https://jenkins.stammgruppe.eu/job/ParadoxSpeedSync/job/master/badge/icon)](https://jenkins.stammgruppe.eu/blue/organizations/jenkins/ParadoxSpeedSync/activity?branch=master)
-A cross-platform tool to overcome the limitations of the speed controls of Paradox Interactive games.
+A cross-platform compatible tool to overcome the limitations of the speed controls of Clausewitz Engine games in multiplayer.
 
 ## What
 In games like Crusader Kings II and Hearts of Iron IV, only the host of a multiplayer session is able to control the game speed
@@ -16,7 +16,7 @@ When you start the application you first have to setup the key bindings. You can
 * The last two are the keys of the speed controls in-game. If you are not hosting, you can skip this.
 
 Then you can either connect to an already running server or host one yourself.  
-**Important:** At the moment the player which hosts the in-game session also has to host the speed sync server.
+**Important:** At the moment, the player which hosts the in-game session also has to host the speed sync server.
 
 After connecting, it will look like this:
 
@@ -32,6 +32,7 @@ You can either:
 ## Troubleshooting
 * If the game won't speed down even if all clients are below current game speed, just press the sync key.
 * Make sure that your server is reachable through the given port, you might need to set up port forwarding in your router settings.
+* The overlay will not be visible in fullscreen mode. You have to run your game in windowed or borderless windowed mode or move the overlay to another screen.
 * If you're hosting, do not use the in-game speed control key bindings for your client.
 
 ## Planned Features
