@@ -70,7 +70,7 @@ public class Server implements Runnable {
     /**
      * If the server is running.
      */
-    public boolean isRunning = true;
+    public volatile boolean isRunning = false;
     /**
      * If the server is also the current host, this is true by default.
      */
@@ -103,6 +103,7 @@ public class Server implements Runnable {
         }
 
         LOGGER.info("Server started. Waiting for connections on port {}.", port);
+        isRunning = true;
 
         while (isRunning) {
             // Wait for connection

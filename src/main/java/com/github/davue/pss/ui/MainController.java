@@ -66,6 +66,16 @@ public class MainController {
 
     @FXML
     public void connect() {
+        if (addressField.getText().strip().isEmpty()) {
+            Main.showError("Please enter an address");
+            return;
+        }
+
+        if (nameField.getText().strip().isEmpty()) {
+            Main.showError("Please enter a name");
+            return;
+        }
+
         Main.client.hostname = addressField.getText();
         Main.client.password = passwordField.getText().strip();
         Main.client.name = nameField.getText().strip();
@@ -80,21 +90,32 @@ public class MainController {
         } catch (NumberFormatException e) {
             if (!addressField.getText().strip().isEmpty()) {
                 Main.showError("Invalid port");
+                return;
             }
+        }
+
+        if (nameField.getText().strip().isEmpty()) {
+            Main.showError("Please enter a name");
+            return;
         }
 
         Main.server.password = passwordField.getText().strip();
 
         new Thread(Main.server).start();
 
-        try {
-            Thread.sleep(400);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        long start = System.currentTimeMillis();
+        while (!Main.server.isRunning) {
+            if (start + 5000 < System.currentTimeMillis()) {
+                Main.showError("Failed to start server");
+                return;
+            }
 
-        if (!Main.server.isRunning)
-            return;
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
 
         Main.client.hostname = "127.0.0.1";
         Main.client.port = Main.server.port;
