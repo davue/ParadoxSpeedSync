@@ -127,7 +127,7 @@ public class MainController {
 
     @FXML
     void openSettings() {
-        Main.sceneSwitcher.activate("setup");
+        Main.sceneManager.activate("setup");
     }
 
     @FXML

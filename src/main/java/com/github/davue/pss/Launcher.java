@@ -18,6 +18,10 @@
 
 package com.github.davue.pss;
 
+/**
+ * We cannot start Main directly, because it somehow breaks JavaFX in shaded jars.
+ * So this is a little wrapper to overcome this problem.
+ */
 public class Launcher {
     public static void main(String[] args) {
         Main.main(args);

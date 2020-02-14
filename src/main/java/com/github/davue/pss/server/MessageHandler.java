@@ -59,6 +59,13 @@ public class MessageHandler {
                     connection.id = server.nextClientID.getAndIncrement();
                     connection.send(Protocol.MESSAGES.HELLO(connection.id));
                     connection.state = Connection.State.READY;
+
+                    // Send other client informations
+                    for (Connection connection : server.connections) {
+                        if (!this.connection.equals(connection)) {
+                            this.connection.send(Protocol.MESSAGES.UPDATE(connection.id, connection.clientSpeed, connection.name));
+                        }
+                    }
                 } else {
                     connection.getServer().LOGGER.debug("Handshake from {}. Waiting for password.", connection.getSocket().getInetAddress().getHostAddress());
                     connection.name = tokens[1];
@@ -107,7 +114,7 @@ public class MessageHandler {
                 // Send updates to all clients but the sender of the update
                 for (Connection connection : server.connections) {
                     if (!this.connection.equals(connection)) {
-                        connection.send(Protocol.MESSAGES.UPDATE(connection.id, connection.clientSpeed, connection.name));
+                        connection.send(Protocol.MESSAGES.UPDATE(this.connection.id, this.connection.clientSpeed, this.connection.name));
                     }
                 }
 

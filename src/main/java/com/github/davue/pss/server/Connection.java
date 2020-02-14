@@ -18,6 +18,8 @@
 
 package com.github.davue.pss.server;
 
+import com.github.davue.pss.client.ClientManager;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -83,6 +85,7 @@ public class Connection extends Thread {
             // Remove connection from server connection list on error
             server.connections.remove(this);
             server.getSpeedNegotiator().check();
+            ClientManager.remove(id);
         }
     }
 

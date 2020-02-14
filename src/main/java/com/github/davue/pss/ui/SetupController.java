@@ -47,7 +47,7 @@ public class SetupController {
 
     @FXML
     public void start(ActionEvent actionEvent) {
-        Main.sceneSwitcher.back();
+        Main.sceneManager.back();
     }
 
     @FXML

@@ -28,27 +28,52 @@ import org.jnativehook.NativeHookException;
 
 import java.util.HashMap;
 
-public class SceneSwitcher {
+public class SceneManager {
     private final HashMap<String, Pane> rootMap = new HashMap<>();
+    private final HashMap<Integer, Pane> clientPanes = new HashMap<>();
     private final Stage stage;
     private final Scene main;
     private Parent lastPane;
 
-    public SceneSwitcher(Stage stage, Scene main) {
+    public SceneManager(Stage stage, Scene main) {
         this.stage = stage;
         this.main = main;
     }
 
+    public void addClientPane(int id, Pane pane) {
+        clientPanes.put(id, pane);
+
+        if (!rootMap.containsKey("speed")) {
+            Main.LOGGER.error("Could not find speed root pane.");
+            Platform.exit();
+        }
+
+        Platform.runLater(() -> {
+            rootMap.get("speed").getChildren().add(pane);
+
+            if (main.getRoot().equals(rootMap.get("speed")))
+                stage.sizeToScene();
+        });
+    }
+
+    public void removeClientPane(int id) {
+        Pane removed = clientPanes.remove(id);
+
+        if (!rootMap.containsKey("speed")) {
+            Main.LOGGER.error("Could not find speed root pane.");
+            Platform.exit();
+        }
+
+        Platform.runLater(() -> {
+            rootMap.get("speed").getChildren().remove(removed);
+
+            if (main.getRoot().equals(rootMap.get("speed")))
+                stage.sizeToScene();
+        });
+    }
+
     public void addRoot(String name, Pane pane) {
         rootMap.put(name, pane);
-    }
-
-    public void removeRoot(String name) {
-        rootMap.remove(name);
-    }
-
-    public Pane getRoot(String name) {
-        return rootMap.get(name);
     }
 
     public void back() {

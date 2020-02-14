@@ -24,14 +24,21 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
 public class SpeedController {
     @FXML
-    public HBox selfSpeed;
+    public HBox speed;
+    @FXML
+    public Label name;
+
+    public void setName(String name) {
+        Platform.runLater(() -> this.name.setText(name));
+    }
 
     public void showSpeed(int speed) {
-        ObservableList<Node> children = selfSpeed.getChildren();
+        ObservableList<Node> children = this.speed.getChildren();
 
         for (int i = 0; i < children.size(); i++) {
             if (i + 1 == speed) {
@@ -45,15 +52,12 @@ public class SpeedController {
 
     @FXML
     public void initialize() {
-        Platform.runLater(() -> {
-            Main.client.speedController = this;
-            showSpeed(1);
-        });
+        Platform.runLater(() -> showSpeed(1));
     }
 
     @FXML
     public void openSettings(ActionEvent actionEvent) {
-        Main.sceneSwitcher.activate("setup");
+        Main.sceneManager.activate("setup");
     }
 
     @FXML

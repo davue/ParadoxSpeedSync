@@ -21,6 +21,7 @@ package com.github.davue.pss;
 import com.github.davue.pss.client.Client;
 import com.github.davue.pss.server.Server;
 import com.github.davue.pss.ui.MainController;
+import com.github.davue.pss.ui.SpeedController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -44,7 +45,7 @@ public class Main extends Application {
     /**
      * The scene switcher of the application.
      */
-    public static SceneSwitcher sceneSwitcher;
+    public static SceneManager sceneManager;
 
     /**
      * The client of the application.
@@ -90,7 +91,7 @@ public class Main extends Application {
             mainController.messageBox.setManaged(true);
             mainController.messageBox.setVisible(true);
             mainController.message.setText(message);
-            sceneSwitcher.activate("main");
+            sceneManager.activate("main");
         });
     }
 
@@ -98,19 +99,20 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         window = primaryStage;
 
+        client = new Client();
+        server = new Server();
+
         // Load different scenes
         Pane setup = FXMLLoader.load(getClass().getResource("/setup.fxml"));
         Pane main = FXMLLoader.load(getClass().getResource("/main.fxml"));
         Pane speed = FXMLLoader.load(getClass().getResource("/speed.fxml"));
-
-        client = new Client();
-        server = new Server();
+        client.speedController = (SpeedController) speed.getUserData();
 
         Scene scene = new Scene(setup);
-        sceneSwitcher = new SceneSwitcher(primaryStage, scene);
-        sceneSwitcher.addRoot("setup", setup);
-        sceneSwitcher.addRoot("main", main);
-        sceneSwitcher.addRoot("speed", speed);
+        sceneManager = new SceneManager(primaryStage, scene);
+        sceneManager.addRoot("setup", setup);
+        sceneManager.addRoot("main", main);
+        sceneManager.addRoot("speed", speed);
 
         primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setTitle("Paradox Speed Sync");

@@ -50,6 +50,7 @@ public class MessageHandler {
                 client.LOGGER.info("Connected to {}:{}.", connection.getSocket().getInetAddress().getHostAddress(), connection.getSocket().getPort());
                 client.id = Integer.parseInt(tokens[1]);
                 connection.state = Connection.State.READY;
+                connection.send(Protocol.MESSAGES.SPEED(1));
                 break;
             case Protocol.MESSAGES.PASS:
                 client.LOGGER.debug("Received PASS from {}. Password required.", connection.getSocket().getInetAddress().getHostAddress());
@@ -78,6 +79,8 @@ public class MessageHandler {
                 String name = String.join(" ", Arrays.copyOfRange(tokens, 3, tokens.length));
 
                 client.LOGGER.debug("Received UPDATE for client {} ({}) with speed {}", id, name, speed);
+                ClientManager.update(id, name, speed);
+                break;
             case Protocol.MESSAGES.CLOSE:
                 client.LOGGER.debug("Server at {} closes connection.", connection.getSocket().getInetAddress().getHostAddress());
                 connection.state = Connection.State.DISCONNECTED;

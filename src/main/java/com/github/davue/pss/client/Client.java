@@ -112,6 +112,7 @@ public class Client {
     }
 
     public void start() {
+        currentSpeed = 1;
         this.connection = new Connection(this, hostname, port == 0 ? Protocol.DEFAULT_PORT : port);
         connection.start();
 
@@ -128,7 +129,7 @@ public class Client {
             return;
 
         // Client seems to be connected at this point so we can switch to the speed scene
-        Main.sceneSwitcher.activate("speed");
+        Main.sceneManager.activate("speed");
 
         // Register global key listener
         try {
