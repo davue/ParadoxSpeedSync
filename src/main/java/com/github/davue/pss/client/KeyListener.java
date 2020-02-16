@@ -60,8 +60,8 @@ public class KeyListener implements NativeKeyListener {
             client.LOGGER.debug("Sending speed down to server.");
             client.speedDown();
         } else if (e.getRawCode() == client.SYNC_KEY) {
-            client.LOGGER.debug("Requesting speed re-sync.");
-            client.sync();
+            //client.LOGGER.debug("Requesting speed re-sync.");
+            //client.sync();
         }
     }
 

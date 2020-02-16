@@ -12,7 +12,6 @@ When you start the application you first have to setup the key bindings. You can
 ![](https://raw.githubusercontent.com/davue/ParadoxSpeedSync/master/images/setup.gif)
 
 * The first two are the buttons you will press to change your speed suggestion.
-* The sync key is a key you can press to force a speed re-sync with the game. This can be useful since the game can sometimes run at different speed than the server thinks it runs.
 * The last two are the keys of the speed controls in-game. If you are not hosting, you can skip this.
 
 Then you can either connect to an already running server or host one yourself.  
@@ -30,7 +29,6 @@ You can either:
 * Or get the latest release here from GitHub.
 
 ## Troubleshooting
-* If the game won't speed down even if all clients are below current game speed, just press the sync key.
 * Make sure that your server is reachable through the given port, you might need to set up port forwarding in your router settings.
 * The overlay will not be visible in fullscreen mode. You have to run your game in windowed or borderless windowed mode or move the overlay to another screen.
 * If you're hosting, do not use the in-game speed control key bindings for your client.

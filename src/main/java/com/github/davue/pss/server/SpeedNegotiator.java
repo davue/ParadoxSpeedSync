@@ -44,6 +44,14 @@ public class SpeedNegotiator {
         if (clients.isEmpty())
             return;
 
+        // Reset speed to auto-sync
+        for (int i = 0; i < 5; i++) {
+            robot.keyPress(server.SPEED_DOWN_KEY);
+            robot.keyRelease(server.SPEED_DOWN_KEY);
+        }
+
+        server.hostSpeed = 1;
+
         short slowestClient = Short.MAX_VALUE;
         for (Connection client : clients) {
             if (client.clientSpeed < slowestClient) {
