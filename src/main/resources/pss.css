@@ -61,6 +61,7 @@
 }
 
 .drag-pane {
+    -fx-cursor: move;
     -fx-background-color: #424242;
 }
 
@@ -69,6 +70,7 @@
 }
 
 .button {
+    -fx-cursor: hand;
     -fx-font-size: 12;
     -fx-font-family: Calibri;
     -fx-background-radius: 0;
