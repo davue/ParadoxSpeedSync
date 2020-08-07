@@ -6,6 +6,10 @@ In games like Crusader Kings II and Hearts of Iron IV, only the host of a multip
 and I always thought that it would be a nice idea to simply run the game at the speed of the slowest player. That way,
 you don't have to ask for permission all the time if you want to adjust the game speed.
 
+## How
+This small overlay keeps track of the desired game speed of each player and then simulates the key presses needed to achieve the slowest speed of all players on the host.
+The protocol is totally **not secure** as everything is sent in plaintext over TCP including the server password. So you should not use any passwords you are using anywhere else. But why would you do that anyways?
+
 ## Usage
 When you start the application you first have to setup the key bindings. You can still edit those later by clicking the settings button on top.
 
