@@ -22,15 +22,14 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import java.lang.String?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-      minWidth="-Infinity" prefWidth="174.0" styleClass="body" stylesheets="@pss.css"
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="root" prefWidth="174.0" styleClass="body" stylesheets="@pss.css"
       xmlns="http://javafx.com/javafx/11.0.1" fx:controller="com.github.davue.pss.ui.SetupController">
     <children>
         <HBox styleClass="head">
             <children>
                 <HBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
                     <children>
-                        <Label style="-fx-font-size: 14;" text="Keybind Setup"/>
+                        <Label style="-fx-font-size: 14;" text="Settings"/>
                     </children>
                     <HBox.margin>
                         <Insets left="5.0"/>
@@ -131,6 +130,28 @@
             <padding>
                 <Insets bottom="5.0"/>
             </padding>
+        </VBox>
+        <VBox>
+            <children>
+                <HBox styleClass="body">
+                    <children>
+                        <HBox alignment="CENTER_LEFT" HBox.hgrow="NEVER">
+                            <children>
+                                <Label text="Preset"/>
+                            </children>
+                            <HBox.margin>
+                                <Insets right="5.0"/>
+                            </HBox.margin>
+                        </HBox>
+                        <ChoiceBox fx:id="choiceBox" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS"
+                                   value="Crusader Kings II">
+                        </ChoiceBox>
+                    </children>
+                    <VBox.margin>
+                        <Insets left="5.0" right="5.0"/>
+                    </VBox.margin>
+                </HBox>
+            </children>
         </VBox>
         <HBox>
             <VBox.margin>

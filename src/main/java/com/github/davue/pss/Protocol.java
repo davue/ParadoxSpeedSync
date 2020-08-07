@@ -18,17 +18,18 @@
 
 package com.github.davue.pss;
 
+import com.github.davue.pss.presets.Preset;
+
 public class Protocol {
+    /**
+     * The protocol version.
+     */
+    public static final short VERSION = 1;
+
     /**
      * The minimum speed the protocol allows.
      */
     public static final short MIN_SPEED = 1;
-
-    /**
-     * The maximum speed the protocol allows.
-     * TODO: Make this customizable
-     */
-    public static final short MAX_SPEED = 5;
 
     /**
      * The default port of the protocol.
@@ -41,9 +42,39 @@ public class Protocol {
      */
     public static class MESSAGES {
         /**
+         * The VERSION message a client gets if there was a protocol version mismatch.
+         */
+        public static final String VERSION = "VERSION";
+
+        /**
          * The HELLO message used to do a handshake between client and server.
          */
         public static final String HELLO = "HELLO";
+        /**
+         * The PASS message used to either notify the client to send a password or send a password to the server.
+         */
+        public static final String PASS = "PASS";
+        /**
+         * The DENIED message which a client receives after sending an incorrect password.
+         */
+        public static final String DENIED = "DENIED";
+        /**
+         * The CLOSE message a client receives if the is closing.
+         */
+        public static final String CLOSE = "CLOSE";
+        /**
+         * The SPEED message sent to the server to tell him the current client speed.
+         */
+        public static final String SPEED = "SPEED";
+        public static final String UPDATE = "UPDATE";
+        /**
+         * The RESET message sent to all clients on server reset.
+         */
+        public static final String SYNC = "SYNC";
+        /**
+         * The PRESET message to communicate the speed settings between server and client.
+         */
+        public static final String PRESET = "PRESET";
 
         /**
          * Constructs a HELLO message with the given id.
@@ -65,13 +96,18 @@ public class Protocol {
          * @return The constructed message ready to be sent.
          */
         public static String HELLO(String name) {
-            return HELLO + " " + name;
+            return HELLO + " " + Protocol.VERSION + " " + name;
         }
 
         /**
-         * The PASS message used to either notify the client to send a password or send a password to the server.
+         * Constructs a VERSION message.
+         * This is a notification to the client that there is a protocol version mismatch.
+         *
+         * @return The constructed message ready to be sent.
          */
-        public static final String PASS = "PASS";
+        public static String VERSION() {
+            return VERSION + " " + Protocol.VERSION;
+        }
 
         /**
          * Constructs a PASS message with the given password.
@@ -84,21 +120,6 @@ public class Protocol {
         }
 
         /**
-         * The DENIED message which a client receives after sending an incorrect password.
-         */
-        public static final String DENIED = "DENIED";
-
-        /**
-         * The CLOSE message a client receives if the is closing.
-         */
-        public static final String CLOSE = "CLOSE";
-
-        /**
-         * The SPEED message sent to the server to tell him the current client speed.
-         */
-        public static final String SPEED = "SPEED";
-
-        /**
          * Constructs a SPEED message with the given speed.
          *
          * @param speed The speed to send.
@@ -108,15 +129,18 @@ public class Protocol {
             return SPEED + " " + speed;
         }
 
-        public static final String UPDATE = "UPDATE";
-
         public static String UPDATE(int id, int speed, String name) {
             return UPDATE + " " + id + " " + speed + " " + name;
         }
 
         /**
-         * The RESET message sent to all clients on server reset.
+         * Constructs a PRESET message with the given preset.
+         *
+         * @param preset The preset to send.
+         * @return The constructed message reade to be sent.
          */
-        public static final String SYNC = "SYNC";
+        public static String PRESET(Preset preset) {
+            return PRESET + " " + preset.getMaxSpeed() + " " + preset.getDefaultSpeed();
+        }
     }
 }

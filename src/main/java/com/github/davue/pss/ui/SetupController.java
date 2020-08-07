@@ -19,12 +19,18 @@
 package com.github.davue.pss.ui;
 
 import com.github.davue.pss.Main;
+import com.github.davue.pss.presets.Preset;
+import com.github.davue.pss.presets.Presets;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
+
+import java.util.stream.Collectors;
 
 public class SetupController {
     @FXML
@@ -39,10 +45,20 @@ public class SetupController {
     public Button serverSpeedUp;
     @FXML
     public Button serverSpeedDown;
+    @FXML
+    public ChoiceBox<String> choiceBox;
 
     @FXML
     public void initialize() {
         Platform.runLater(() -> root.requestFocus());
+
+        choiceBox.setItems(FXCollections.observableArrayList(Presets.getPresets().stream().map(Preset::getName).collect(Collectors.toList())));
+        choiceBox.setValue(Presets.getPresetByID("DEFAULT").getName());
+        Main.server.setPreset(Presets.getPresetByID("DEFAULT"));
+
+        choiceBox.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
+            Main.server.setPreset(Presets.getPresetByName(newValue));
+        });
     }
 
     @FXML

@@ -68,11 +68,13 @@ public class Connection extends Thread {
                 messageHandler.handleMessage(line);
             }
         } catch (IOException e) {
-            e.printStackTrace();
-            if (e.getMessage().endsWith(": connect")) {
-                Main.showError(e.getMessage().replace(": connect", ""));
-            } else {
-                Main.showError("Connection closed");
+            if (client.abnormalDisconnect) {
+                e.printStackTrace();
+                if (e.getMessage().endsWith(": connect")) {
+                    Main.showError(e.getMessage().replace(": connect", ""));
+                } else {
+                    Main.showError("Connection closed");
+                }
             }
         } finally {
             synchronized (client) {

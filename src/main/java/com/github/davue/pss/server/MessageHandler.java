@@ -48,17 +48,25 @@ public class MessageHandler {
                     break;
                 }
 
-                if (tokens.length < 2) {
-                    connection.getServer().LOGGER.warn("Client at {} sent HELLO without name.", connection.getSocket().getInetAddress().getHostAddress());
+                if (tokens.length < 3) {
+                    connection.getServer().LOGGER.warn("Client at {} sent invalid HELLO message.", connection.getSocket().getInetAddress().getHostAddress());
+                    break;
+                }
+
+                // If there is a protocol mismatch
+                if (Protocol.VERSION != Short.parseShort(tokens[1])) {
+                    connection.send(Protocol.MESSAGES.VERSION());
                     break;
                 }
 
                 if (connection.getServer().password.isEmpty()) {
                     connection.getServer().LOGGER.debug("Handshake from {}. Accept.", connection.getSocket().getInetAddress().getHostAddress());
-                    connection.name = tokens[1];
+                    connection.name = tokens[2];
                     connection.id = server.nextClientID.getAndIncrement();
                     connection.send(Protocol.MESSAGES.HELLO(connection.id));
                     connection.state = Connection.State.READY;
+
+                    connection.send(Protocol.MESSAGES.PRESET(server.getPreset()));
 
                     // Send other client informations
                     for (Connection connection : server.connections) {
@@ -68,7 +76,7 @@ public class MessageHandler {
                     }
                 } else {
                     connection.getServer().LOGGER.debug("Handshake from {}. Waiting for password.", connection.getSocket().getInetAddress().getHostAddress());
-                    connection.name = tokens[1];
+                    connection.name = tokens[2];
                     connection.send(Protocol.MESSAGES.PASS);
                     connection.state = Connection.State.WAITING_FOR_PASS;
                 }
@@ -91,6 +99,15 @@ public class MessageHandler {
                     connection.id = server.nextClientID.getAndIncrement();
                     connection.send(Protocol.MESSAGES.HELLO(connection.id));
                     connection.state = Connection.State.READY;
+
+                    connection.send(Protocol.MESSAGES.PRESET(server.getPreset()));
+
+                    // Send other client informations
+                    for (Connection connection : server.connections) {
+                        if (!this.connection.equals(connection)) {
+                            this.connection.send(Protocol.MESSAGES.UPDATE(connection.id, connection.clientSpeed, connection.name));
+                        }
+                    }
                 } else {
                     connection.getServer().LOGGER.debug("Received incorrect PASS from {}. Sending DENIED.", connection.getSocket().getInetAddress().getHostAddress());
                     connection.send(Protocol.MESSAGES.DENIED);

@@ -77,6 +77,8 @@ public class Main extends Application {
      * @param message The message to show.
      */
     public static void showError(String message) {
+        Main.client.abnormalDisconnect = false;
+
         stopBackgroundTasks();
 
         // Stop capturing keystrokes if an error occurred
@@ -92,6 +94,8 @@ public class Main extends Application {
             mainController.messageBox.setVisible(true);
             mainController.message.setText(message);
             sceneManager.activate("main");
+
+            Main.client.abnormalDisconnect = true;
         });
     }
 

@@ -50,7 +50,20 @@ public class MessageHandler {
                 client.LOGGER.info("Connected to {}:{}.", connection.getSocket().getInetAddress().getHostAddress(), connection.getSocket().getPort());
                 client.id = Integer.parseInt(tokens[1]);
                 connection.state = Connection.State.READY;
-                connection.send(Protocol.MESSAGES.SPEED(1));
+                connection.send(Protocol.MESSAGES.SPEED(client.defaultSpeed));
+                break;
+            case Protocol.MESSAGES.VERSION:
+                client.LOGGER.debug("Received VERSION from {}. Version mismatch!", connection.getSocket().getInetAddress().getHostAddress());
+                connection.state = Connection.State.INIT;
+
+                short serverVersion = Short.parseShort(tokens[1]);
+
+                if (Protocol.VERSION < serverVersion) {
+                    Main.showError("Client outdated");
+                } else {
+                    Main.showError("Server outdated");
+                }
+
                 break;
             case Protocol.MESSAGES.PASS:
                 client.LOGGER.debug("Received PASS from {}. Password required.", connection.getSocket().getInetAddress().getHostAddress());
@@ -64,9 +77,22 @@ public class MessageHandler {
                 connection.state = Connection.State.INIT;
                 break;
             case Protocol.MESSAGES.DENIED:
-                client.LOGGER.debug("Received DENIED from {}. Password required.", connection.getSocket().getInetAddress().getHostAddress());
+                client.LOGGER.debug("Received DENIED from {}. Incorrect password.", connection.getSocket().getInetAddress().getHostAddress());
                 connection.state = Connection.State.INIT;
                 Main.showError("Wrong password");
+                break;
+            case Protocol.MESSAGES.PRESET:
+                if (tokens.length < 3) {
+                    client.LOGGER.warn("Received invalid PRESET message.");
+                    break;
+                }
+
+                client.maxSpeed = Short.parseShort(tokens[1]);
+                client.defaultSpeed = Short.parseShort(tokens[2]);
+
+                client.LOGGER.debug("Received PRESET ({},{}) from {}.", client.maxSpeed, client.defaultSpeed, connection.getSocket().getInetAddress().getHostAddress());
+
+                // TODO: Implement window restructuring in ClientManager
                 break;
             case Protocol.MESSAGES.UPDATE:
                 if (tokens.length < 4) {

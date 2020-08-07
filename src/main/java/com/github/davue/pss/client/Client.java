@@ -73,26 +73,36 @@ public class Client {
      */
     public boolean isKeyListenerRegistered = false;
     /**
-     * The clients current speed.
+     * The client maximum speed. This should be communicated with the server.
      */
-    private int currentSpeed = 1;
+    public short maxSpeed = 5;
+    /**
+     * The default speed. This should be communicated with the server.
+     */
+    public short defaultSpeed = 1;
+    public boolean abnormalDisconnect = true;
+
     /**
      * The connection of the client to the server
      */
     private Connection connection;
+    /**
+     * The clients current speed.
+     */
+    private short currentSpeed = 1;
 
     public int getSpeed() {
         return currentSpeed;
     }
 
     public void speedUp() {
-        if (currentSpeed < Protocol.MAX_SPEED) {
+        if (currentSpeed < maxSpeed) {
             currentSpeed++;
             ClientManager.redraw();
 
             connection.send(Protocol.MESSAGES.SPEED(currentSpeed));
         } else {
-            connection.send(Protocol.MESSAGES.SPEED(Protocol.MAX_SPEED));
+            connection.send(Protocol.MESSAGES.SPEED(maxSpeed));
         }
     }
 
@@ -151,6 +161,7 @@ public class Client {
 
         // Send initial handshake
         connection.send(Protocol.MESSAGES.HELLO(name));
+        //connection.send("HELLO 0 " + name);
     }
 
     public void close() {

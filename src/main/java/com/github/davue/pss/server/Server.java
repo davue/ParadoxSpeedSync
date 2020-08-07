@@ -20,6 +20,7 @@ package com.github.davue.pss.server;
 
 import com.github.davue.pss.Main;
 import com.github.davue.pss.Protocol;
+import com.github.davue.pss.presets.Preset;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -72,16 +73,20 @@ public class Server implements Runnable {
      */
     public volatile boolean isRunning = false;
     /**
-     * If the server is also the current host, this is true by default.
+     * The preset the server uses.
      */
-    private boolean isHost = true;
-    /**
-     * The client which is the current host, null if the server is host.
-     */
-    private Connection host = null;
+    private Preset preset = null;
 
     public Server() {
         this.speedNegotiator = new SpeedNegotiator(this, connections);
+    }
+
+    public Preset getPreset() {
+        return preset;
+    }
+
+    public void setPreset(Preset preset) {
+        this.preset = preset;
     }
 
     @Override
