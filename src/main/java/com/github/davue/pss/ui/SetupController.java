@@ -67,7 +67,10 @@ public class SetupController {
         customSettings.setDisable(true);
 
         choiceBox.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
-            Main.server.setPreset(Presets.getPresetByName(newValue));
+            Preset preset = Presets.getPresetByName(newValue);
+            Main.server.setPreset(preset);
+            defaultSpeedBox.setText(Short.toString(preset.getDefaultSpeed()));
+            maxSpeedBox.setText(Short.toString(preset.getMaxSpeed()));
 
             customSettings.setDisable(!newValue.equals("Custom"));
         });
