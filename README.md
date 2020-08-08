@@ -15,8 +15,9 @@ When you start the application you first have to setup the key bindings. You can
 
 ![](https://raw.githubusercontent.com/davue/ParadoxSpeedSync/master/images/setup.gif)
 
-* The first two are the buttons you will press to change your speed suggestion.
+* The first two are the buttons you will press to change your speed suggestion. If you are not hosting, you can click on Save now.
 * The last two are the keys of the speed controls in-game. If you are not hosting, you can skip this.
+* Then you can choose one of the Presets used to determine the maximum speed and default speed or choose "Custom" and set your own values.
 
 Then you can either connect to an already running server or host one yourself.  
 **Important:** At the moment, the player which hosts the in-game session also has to host the speed sync server.
@@ -36,6 +37,9 @@ You can either:
 * Make sure that your server is reachable through the given port, you might need to set up port forwarding in your router settings.
 * The overlay will not be visible in fullscreen mode. You have to run your game in windowed or borderless windowed mode or move the overlay to another screen.
 * If you're hosting, do not use the in-game speed control key bindings for your client.
+
+## Known Issues
+* Stellaris somehow does not support keybound speed controls in multiplayer, so this will not work until they fix it.
 
 ## Planned Features
 * Server does not try to control speed when game is out of focus
