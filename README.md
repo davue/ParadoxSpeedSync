@@ -15,9 +15,12 @@ When you start the application you first have to setup the key bindings. You can
 
 ![](https://raw.githubusercontent.com/davue/ParadoxSpeedSync/master/images/setup.gif)
 
-* The first two are the buttons you will press to change your speed suggestion. If you are not hosting, you can click on Save now.
-* The last two are the keys of the speed controls in-game. If you are not hosting, you can skip this.
-* Then you can choose one of the Presets used to determine the maximum speed and default speed or choose "Custom" and set your own values.
+The first two are the buttons you will press to change your speed suggestion. **If you are not hosting**, you can click on Save now.
+
+If you are hosting:
+
+The last two are the keys of the speed controls in-game.
+On the bottom you can choose one of the Presets used to determine the maximum speed and default speed or choose "Custom" and set your own values.
 
 Then you can either connect to an already running server or host one yourself.  
 **Important:** At the moment, the player which hosts the in-game session also has to host the speed sync server.
