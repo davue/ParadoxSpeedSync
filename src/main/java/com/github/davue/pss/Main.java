@@ -21,6 +21,7 @@ package com.github.davue.pss;
 import com.github.davue.pss.client.Client;
 import com.github.davue.pss.server.Server;
 import com.github.davue.pss.ui.MainController;
+import com.github.davue.pss.ui.SetupController;
 import com.github.davue.pss.ui.SpeedController;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -56,6 +57,11 @@ public class Main extends Application {
      * The server of the application.
      */
     public static Server server;
+
+    /**
+     * The settings controller of the application
+     */
+    public static SetupController setupController;
 
     /**
      * The controller of the main scene.
@@ -111,6 +117,7 @@ public class Main extends Application {
         Pane main = FXMLLoader.load(getClass().getResource("/main.fxml"));
         Pane speed = FXMLLoader.load(getClass().getResource("/speed.fxml"));
         client.speedController = (SpeedController) speed.getUserData();
+        setupController = (SetupController) setup.getUserData();
 
         Scene scene = new Scene(setup);
         sceneManager = new SceneManager(primaryStage, scene);

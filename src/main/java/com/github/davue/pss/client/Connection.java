@@ -76,6 +76,8 @@ public class Connection extends Thread {
                     Main.showError("Connection closed");
                 }
             }
+
+            Main.setupController.setPresetDisable(false);
         } finally {
             synchronized (client) {
                 client.notify();

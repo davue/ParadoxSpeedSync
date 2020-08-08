@@ -56,6 +56,8 @@ public class SetupController {
     public TextField maxSpeedBox;
     @FXML
     public HBox customSettings;
+    @FXML
+    public VBox customSettingsChoice;
 
     @FXML
     public void initialize() {
@@ -111,6 +113,16 @@ public class SetupController {
     public void close(ActionEvent actionEvent) {
         Main.stopBackgroundTasks();
         Platform.exit();
+    }
+
+    public void setPresetDisable(boolean b) {
+        if (b) {
+            customSettings.setDisable(true);
+            customSettingsChoice.setDisable(true);
+        } else {
+            customSettingsChoice.setDisable(false);
+            customSettings.setDisable(!choiceBox.getValue().equals("Custom"));
+        }
     }
 
     @FXML

@@ -24,6 +24,9 @@
 <?import java.lang.String?>
 <VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="root" prefWidth="174.0" styleClass="body" stylesheets="@pss.css"
       xmlns="http://javafx.com/javafx/11.0.1" fx:controller="com.github.davue.pss.ui.SetupController">
+    <userData>
+        <fx:reference source="controller"/>
+    </userData>
     <children>
         <HBox styleClass="head">
             <children>
@@ -131,7 +134,7 @@
                 <Insets bottom="5.0"/>
             </padding>
         </VBox>
-        <VBox>
+        <VBox fx:id="customSettingsChoice">
             <children>
                 <HBox styleClass="body">
                     <children>

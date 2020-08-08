@@ -118,6 +118,8 @@ public class Client {
     }
 
     public void start() {
+        Main.setupController.setPresetDisable(true);
+
         currentSpeed = 1;
         this.connection = new Connection(this, hostname, port == 0 ? Protocol.DEFAULT_PORT : port);
         connection.start();
@@ -158,6 +160,10 @@ public class Client {
         // Send initial handshake
         connection.send(Protocol.MESSAGES.HELLO(name));
         //connection.send("HELLO 0 " + name);
+    }
+
+    public boolean isConnected() {
+        return connection.isConnected();
     }
 
     public void close() {
