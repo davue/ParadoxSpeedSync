@@ -21,12 +21,14 @@ package com.github.davue.pss.ui;
 import com.github.davue.pss.Main;
 import com.github.davue.pss.presets.Preset;
 import com.github.davue.pss.presets.Presets;
+import com.github.davue.pss.presets.impl.Custom;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 
@@ -47,6 +49,10 @@ public class SetupController {
     public Button serverSpeedDown;
     @FXML
     public ChoiceBox<String> choiceBox;
+    @FXML
+    public TextField defaultSpeedBox;
+    @FXML
+    public TextField maxSpeedBox;
 
     @FXML
     public void initialize() {
@@ -63,6 +69,8 @@ public class SetupController {
 
     @FXML
     public void start(ActionEvent actionEvent) {
+        ((Custom) Presets.getPresetByID("CUSTOM")).setDefaultSpeed(Short.parseShort(defaultSpeedBox.getText()));
+        ((Custom) Presets.getPresetByID("CUSTOM")).setMaxSpeed(Short.parseShort(maxSpeedBox.getText()));
         Main.sceneManager.back();
     }
 
