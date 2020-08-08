@@ -30,6 +30,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.util.stream.Collectors;
@@ -53,6 +54,8 @@ public class SetupController {
     public TextField defaultSpeedBox;
     @FXML
     public TextField maxSpeedBox;
+    @FXML
+    public HBox customSettings;
 
     @FXML
     public void initialize() {
@@ -61,9 +64,12 @@ public class SetupController {
         choiceBox.setItems(FXCollections.observableArrayList(Presets.getPresets().stream().map(Preset::getName).collect(Collectors.toList())));
         choiceBox.setValue(Presets.getPresetByID("DEFAULT").getName());
         Main.server.setPreset(Presets.getPresetByID("DEFAULT"));
+        customSettings.setDisable(true);
 
         choiceBox.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
             Main.server.setPreset(Presets.getPresetByName(newValue));
+
+            customSettings.setDisable(!newValue.equals("Custom"));
         });
     }
 

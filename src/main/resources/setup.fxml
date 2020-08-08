@@ -153,7 +153,7 @@
                 </HBox>
             </children>
         </VBox>
-        <HBox>
+        <HBox fx:id="customSettings">
             <children>
                 <HBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
                     <children>
