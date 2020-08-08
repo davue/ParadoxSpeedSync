@@ -59,11 +59,11 @@ public class Server implements Runnable {
     /**
      * The key code for the in-game speed up key.
      */
-    public int SPEED_UP_KEY = -1;
+    public int SPEED_UP_KEY = 0;
     /**
      * The key code for the in-game speed down key.
      */
-    public int SPEED_DOWN_KEY = -1;
+    public int SPEED_DOWN_KEY = 0;
     /**
      * The speed of the host.
      */

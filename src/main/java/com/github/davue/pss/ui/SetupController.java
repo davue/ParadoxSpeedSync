@@ -71,6 +71,30 @@ public class SetupController {
 
             customSettings.setDisable(!newValue.equals("Custom"));
         });
+
+        if (Main.client.SPEED_UP_KEY == 0) {
+            clientSpeedUp.setText("Nothing");
+        } else {
+            clientSpeedUp.setText(java.awt.event.KeyEvent.getKeyText(Main.client.SPEED_UP_KEY));
+        }
+
+        if (Main.client.SPEED_DOWN_KEY == 0) {
+            clientSpeedDown.setText("Nothing");
+        } else {
+            clientSpeedDown.setText(java.awt.event.KeyEvent.getKeyText(Main.client.SPEED_DOWN_KEY));
+        }
+
+        if (Main.server.SPEED_UP_KEY == 0) {
+            serverSpeedUp.setText("Nothing");
+        } else {
+            serverSpeedUp.setText(java.awt.event.KeyEvent.getKeyText(Main.server.SPEED_UP_KEY));
+        }
+
+        if (Main.server.SPEED_DOWN_KEY == 0) {
+            serverSpeedDown.setText("Nothing");
+        } else {
+            serverSpeedDown.setText(java.awt.event.KeyEvent.getKeyText(Main.server.SPEED_DOWN_KEY));
+        }
     }
 
     @FXML
@@ -104,7 +128,12 @@ public class SetupController {
             Main.server.SPEED_DOWN_KEY = code;
         }
 
-        sourceButton.setText(Integer.toString(code));
+        if (keyEvent.getCode().getCode() == 0) {
+            sourceButton.setText("Nothing");
+        } else {
+            sourceButton.setText(java.awt.event.KeyEvent.getKeyText(keyEvent.getCode().getCode()));
+        }
+
         root.requestFocus();
     }
 }

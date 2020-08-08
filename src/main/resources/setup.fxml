@@ -63,11 +63,11 @@
                     <children>
                         <HBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
                             <children>
-                                <Label text="Speed up key"/>
+                                <Label text="Speed up"/>
                             </children>
                         </HBox>
                         <Button fx:id="clientSpeedUp" mnemonicParsing="false" onKeyReleased="#handleKeyBind"
-                                prefWidth="41.0" text=" "/>
+                                prefWidth="65.0" style="-fx-font-size: 11;" text=" "/>
                     </children>
                     <VBox.margin>
                         <Insets left="5.0" right="5.0" top="5.0"/>
@@ -77,11 +77,11 @@
                     <children>
                         <HBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
                             <children>
-                                <Label text="Speed down key"/>
+                                <Label text="Speed down"/>
                             </children>
                         </HBox>
                         <Button fx:id="clientSpeedDown" mnemonicParsing="false" onKeyReleased="#handleKeyBind"
-                                prefWidth="41.0" text=" "/>
+                                prefWidth="65.0" style="-fx-font-size: 11;" text=" "/>
                     </children>
                     <VBox.margin>
                         <Insets left="5.0" right="5.0" top="5.0"/>
@@ -98,7 +98,7 @@
                     <children>
                         <HBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
                             <children>
-                                <Label text="In-game speed up key">
+                                <Label text="Server speed up">
                                     <HBox.margin>
                                         <Insets/>
                                     </HBox.margin>
@@ -106,7 +106,7 @@
                             </children>
                         </HBox>
                         <Button fx:id="serverSpeedUp" mnemonicParsing="false" onKeyReleased="#handleKeyBind"
-                                prefWidth="41.0" text=" "/>
+                                prefWidth="65.0" style="-fx-font-size: 11;" text=" "/>
                     </children>
                     <VBox.margin>
                         <Insets left="5.0" right="5.0" top="5.0"/>
@@ -116,11 +116,11 @@
                     <children>
                         <HBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
                             <children>
-                                <Label text="In-game slow down key"/>
+                                <Label text="Server speed down"/>
                             </children>
                         </HBox>
                         <Button fx:id="serverSpeedDown" mnemonicParsing="false" onKeyReleased="#handleKeyBind"
-                                prefWidth="41.0" text=" "/>
+                                prefWidth="65.0" style="-fx-font-size: 11;" text=" "/>
                     </children>
                     <VBox.margin>
                         <Insets left="5.0" right="5.0" top="5.0"/>
