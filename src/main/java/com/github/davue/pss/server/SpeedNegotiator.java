@@ -44,6 +44,20 @@ public class SpeedNegotiator {
         if (clients.isEmpty())
             return;
 
+        boolean doNothing = false;
+        if (server.SPEED_UP_KEY == -1) {
+            server.LOGGER.warn("No ingame speed up key set!");
+            doNothing = true;
+        }
+
+        if (server.SPEED_DOWN_KEY == -1) {
+            server.LOGGER.warn("No ingame speed down key set!");
+            doNothing = true;
+        }
+
+        if (doNothing)
+            return;
+
         // Reset speed to auto-sync
         for (int i = 0; i < 5; i++) {
             robot.keyPress(server.SPEED_DOWN_KEY);
