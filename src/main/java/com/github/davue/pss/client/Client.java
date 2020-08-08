@@ -89,11 +89,7 @@ public class Client {
     /**
      * The clients current speed.
      */
-    private short currentSpeed = 1;
-
-    public int getSpeed() {
-        return currentSpeed;
-    }
+    public short currentSpeed = 1;
 
     public void speedUp() {
         if (currentSpeed < maxSpeed) {

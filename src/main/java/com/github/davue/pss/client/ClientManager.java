@@ -20,8 +20,15 @@ package com.github.davue.pss.client;
 
 import com.github.davue.pss.Main;
 import com.github.davue.pss.ui.SpeedController;
+import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.StrokeType;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -39,7 +46,7 @@ public class ClientManager {
     }
 
     public static void redraw() {
-        int ownSpeed = Main.client.getSpeed();
+        int ownSpeed = Main.client.currentSpeed;
         int slowestSpeed = ownSpeed;
         for (Map.Entry<Integer, SpeedController> client : clients.entrySet()) {
             SpeedController controller = client.getValue();
@@ -79,5 +86,41 @@ public class ClientManager {
         clients.get(id).setSpeed(speed);
 
         redraw();
+    }
+
+    public static void applyPreset() {
+        // Restructure our own speed bar
+        applyPreset(Main.client.speedController);
+
+        // Restructure all other speed bars
+        for (SpeedController controller : clients.values()) {
+            applyPreset(controller);
+        }
+    }
+
+    public static void applyPreset(SpeedController speedController) {
+        Platform.runLater(() -> {
+            speedController.setGreen(Main.client.defaultSpeed); // TODO: Don't do this if we change the preset mid-execution
+            ObservableList<Node> children = speedController.getSpeedBox().getChildren();
+            children.clear();
+
+            int boxWidth = (97 + Main.client.maxSpeed) / Main.client.maxSpeed;
+
+            // Add first rectangle
+            Rectangle firstRec = new Rectangle(boxWidth, 20);
+            firstRec.getStyleClass().add("rectangle");
+            firstRec.setStrokeType(StrokeType.INSIDE);
+            children.add(firstRec);
+
+            // Add other rectangles with 1 left inset
+            for (int i = 1; i < Main.client.maxSpeed; i++) {
+                Rectangle rec = new Rectangle(boxWidth, 20);
+                rec.getStyleClass().add("rectangle");
+                rec.setStrokeType(StrokeType.INSIDE);
+                children.add(rec);
+
+                HBox.setMargin(rec, new Insets(0, 0, 0, -1));
+            }
+        });
     }
 }

@@ -89,10 +89,11 @@ public class MessageHandler {
 
                 client.maxSpeed = Short.parseShort(tokens[1]);
                 client.defaultSpeed = Short.parseShort(tokens[2]);
+                client.currentSpeed = client.defaultSpeed;
 
                 client.LOGGER.debug("Received PRESET ({},{}) from {}.", client.maxSpeed, client.defaultSpeed, connection.getSocket().getInetAddress().getHostAddress());
 
-                // TODO: Implement window restructuring in ClientManager
+                ClientManager.applyPreset();
                 break;
             case Protocol.MESSAGES.UPDATE:
                 if (tokens.length < 4) {

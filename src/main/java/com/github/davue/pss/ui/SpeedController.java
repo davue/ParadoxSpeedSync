@@ -32,8 +32,11 @@ public class SpeedController {
     private HBox speedBox;
     @FXML
     private Label name;
-
     private int speed = 1;
+
+    public HBox getSpeedBox() {
+        return speedBox;
+    }
 
     public int getSpeed() {
         return speed;
@@ -89,7 +92,7 @@ public class SpeedController {
 
     @FXML
     private void initialize() {
-        setGreen(1);
+        setGreen(Main.client.defaultSpeed);
     }
 
     @FXML
