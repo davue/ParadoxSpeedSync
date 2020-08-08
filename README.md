@@ -37,9 +37,9 @@ You can either:
 * Or get the latest release here from GitHub.
 
 ## Troubleshooting
-* Make sure that your server is reachable through the given port, you might need to set up port forwarding in your router settings.
+* Make sure that your server is reachable through the given port, you might need to set up port forwarding in your router settings. (Default port: **15188 / TCP**)
 * The overlay will not be visible in fullscreen mode. You have to run your game in windowed or borderless windowed mode or move the overlay to another screen.
-* If you're hosting, do not use the in-game speed control key bindings for your client.
+* If you're hosting, do not use the in-game speed controls. Only use the speed controls you have set in the overlay settings.
 
 ## Known Issues
 * Stellaris somehow does not support keybound speed controls in multiplayer, so this will not work until they fix it.
