@@ -45,12 +45,12 @@ public class SpeedNegotiator {
             return;
 
         boolean doNothing = false;
-        if (server.SPEED_UP_KEY == -1) {
+        if (server.SPEED_UP_KEY == 0) {
             server.LOGGER.warn("No ingame speed up key set!");
             doNothing = true;
         }
 
-        if (server.SPEED_DOWN_KEY == -1) {
+        if (server.SPEED_DOWN_KEY == 0) {
             server.LOGGER.warn("No ingame speed down key set!");
             doNothing = true;
         }
