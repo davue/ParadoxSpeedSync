@@ -76,7 +76,10 @@ public class MainController {
             return;
         }
 
-        Main.client.hostname = addressField.getText();
+        String[] address = addressField.getText().strip().split(":");
+
+        Main.client.hostname = address[0];
+        Main.client.port = address.length == 2 ? Integer.parseInt(address[1]) : 0;
         Main.client.password = passwordField.getText().strip();
         Main.client.name = nameField.getText().strip();
 
