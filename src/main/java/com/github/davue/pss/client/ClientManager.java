@@ -71,7 +71,7 @@ public class ClientManager {
         // If it's a new client
         if (!clients.containsKey(id)) {
             try {
-                Pane speedPane = FXMLLoader.load(ClientManager.class.getResource("/speed_sub.fxml"));
+                Pane speedPane = FXMLLoader.load(ClientManager.class.getResource("/ui/speed_sub.fxml"));
                 Main.sceneManager.addClientPane(id, speedPane);
 
                 SpeedController controller = (SpeedController) speedPane.getUserData();

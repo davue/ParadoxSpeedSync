@@ -113,9 +113,9 @@ public class Main extends Application {
         server = new Server();
 
         // Load different scenes
-        Pane setup = FXMLLoader.load(getClass().getResource("/setup.fxml"));
-        Pane main = FXMLLoader.load(getClass().getResource("/main.fxml"));
-        Pane speed = FXMLLoader.load(getClass().getResource("/speed.fxml"));
+        Pane setup = FXMLLoader.load(getClass().getResource("/ui/setup.fxml"));
+        Pane main = FXMLLoader.load(getClass().getResource("/ui/main.fxml"));
+        Pane speed = FXMLLoader.load(getClass().getResource("/ui/speed.fxml"));
         client.speedController = (SpeedController) speed.getUserData();
         setupController = (SetupController) setup.getUserData();
 
