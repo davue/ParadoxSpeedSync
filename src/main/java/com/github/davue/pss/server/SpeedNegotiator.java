@@ -44,6 +44,9 @@ public class SpeedNegotiator {
         if (clients.isEmpty())
             return;
 
+        if (!WindowFocusListener.isGameFocused())
+            return;
+
         boolean doNothing = false;
         if (server.SPEED_UP_KEY == 0) {
             server.LOGGER.warn("No ingame speed up key set!");
@@ -83,9 +86,9 @@ public class SpeedNegotiator {
                 robot.keyRelease(server.SPEED_UP_KEY);
                 server.hostSpeed++;
             }
-
-            server.LOGGER.info("Host is now running at speed: {}", server.hostSpeed);
         }
+
+        server.LOGGER.info("Host is now running at speed: {}", server.hostSpeed);
     }
 
     /**
