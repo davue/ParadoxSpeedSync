@@ -43,6 +43,7 @@ You can either:
 
 ## Known Issues
 * Stellaris somehow does not support keybound speed controls in multiplayer, so this will not work until they fix it.
+* LINUX (*Tested on Ubuntu 20.04*): The global key listener does not seem to work and the text scaling is a bit off.
 
 ## Planned Features
 * Different speed agreement strategies

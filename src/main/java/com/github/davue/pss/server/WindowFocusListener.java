@@ -23,8 +23,16 @@ import com.sun.jna.platform.win32.*;
 import com.sun.jna.ptr.IntByReference;
 
 public class WindowFocusListener {
-    private static final User32 user32 = User32.INSTANCE;
-    private static final Kernel32 kernel32 = Kernel32.INSTANCE;
+    private static User32 user32 = null;
+    private static Kernel32 kernel32 = null;
+
+    static {
+        // Load windows libs only if on windows
+        if (Platform.isWindows()) {
+            user32 = User32.INSTANCE;
+            kernel32 = Kernel32.INSTANCE;
+        }
+    }
 
     private static final String[] validGames = {"ck2game", "stellaris", "hoi4", "eu4"};
 
