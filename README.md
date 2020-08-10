@@ -45,8 +45,6 @@ You can either:
 * Stellaris somehow does not support keybound speed controls in multiplayer, so this will not work until they fix it.
 
 ## Planned Features
-* Server does not try to control speed when game is out of focus
-* Dedicated server mode (such that the client that hosts the game can be on another device as the speed sync server)
 * Different speed agreement strategies
 
 ## Additional Information

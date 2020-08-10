@@ -25,7 +25,6 @@ import com.sun.jna.ptr.IntByReference;
 public class WindowFocusListener {
     private static final User32 user32 = User32.INSTANCE;
     private static final Kernel32 kernel32 = Kernel32.INSTANCE;
-    private static final Psapi psapi = Psapi.INSTANCE;
 
     private static final String[] validGames = {"ck2game", "stellaris", "hoi4", "eu4"};
 
@@ -36,7 +35,7 @@ public class WindowFocusListener {
             String executableName = split[split.length - 1].toLowerCase();
             for (String game : validGames) {
                 String validName = game + ".exe";
-                if (executableName.substring(0, validName.length()).equals(validName))
+                if (executableName.startsWith(validName))
                     return true;
             }
 
