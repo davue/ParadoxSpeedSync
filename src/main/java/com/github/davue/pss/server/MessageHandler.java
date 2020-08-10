@@ -44,12 +44,12 @@ public class MessageHandler {
             case Protocol.MESSAGES.HELLO:
                 // Ignore HELLO if the client is already connected
                 if (connection.state != Connection.State.INIT) {
-                    connection.getServer().LOGGER.warn("Received HELLO after handshake from {}", connection.getSocket().getInetAddress().getHostAddress());
+                    server.LOGGER.warn("Received HELLO after handshake from {}", connection.getSocket().getInetAddress().getHostAddress());
                     break;
                 }
 
                 if (tokens.length < 3) {
-                    connection.getServer().LOGGER.warn("Client at {} sent invalid HELLO message.", connection.getSocket().getInetAddress().getHostAddress());
+                    server.LOGGER.warn("Client at {} sent invalid HELLO message.", connection.getSocket().getInetAddress().getHostAddress());
                     break;
                 }
 
@@ -59,13 +59,14 @@ public class MessageHandler {
                     break;
                 }
 
-                if (connection.getServer().password.isEmpty()) {
-                    connection.getServer().LOGGER.debug("Handshake from {}. Accept.", connection.getSocket().getInetAddress().getHostAddress());
+                if (server.password.isEmpty()) {
+                    server.LOGGER.debug("Handshake from {}. Accept.", connection.getSocket().getInetAddress().getHostAddress());
                     connection.name = tokens[2];
                     connection.id = server.nextClientID.getAndIncrement();
                     connection.send(Protocol.MESSAGES.HELLO(connection.id));
                     connection.state = Connection.State.READY;
 
+                    server.LOGGER.info("{}#{} connected to the server.", connection.name, connection.id);
                     connection.send(Protocol.MESSAGES.PRESET(server.getPreset()));
 
                     // Send other client informations
@@ -75,7 +76,7 @@ public class MessageHandler {
                         }
                     }
                 } else {
-                    connection.getServer().LOGGER.debug("Handshake from {}. Waiting for password.", connection.getSocket().getInetAddress().getHostAddress());
+                    server.LOGGER.debug("Handshake from {}. Waiting for password.", connection.getSocket().getInetAddress().getHostAddress());
                     connection.name = tokens[2];
                     connection.send(Protocol.MESSAGES.PASS);
                     connection.state = Connection.State.WAITING_FOR_PASS;
@@ -84,22 +85,23 @@ public class MessageHandler {
             case Protocol.MESSAGES.PASS:
                 // Ignore message if the server is not waiting for a password from the client
                 if (connection.state != Connection.State.WAITING_FOR_PASS) {
-                    connection.getServer().LOGGER.warn("Received PASS from {} without expecting it.", connection.getSocket().getInetAddress().getHostAddress());
+                    server.LOGGER.warn("Received PASS from {} without expecting it.", connection.getSocket().getInetAddress().getHostAddress());
                     break;
                 }
 
                 if (tokens.length < 2) {
-                    connection.getServer().LOGGER.warn("Client at {} sent PASS without arguments.", connection.getSocket().getInetAddress().getHostAddress());
+                    server.LOGGER.warn("Client at {} sent PASS without arguments.", connection.getSocket().getInetAddress().getHostAddress());
                     connection.send(Protocol.MESSAGES.DENIED);
                     break;
                 }
 
-                if (connection.getServer().password.equals(tokens[1])) {
-                    connection.getServer().LOGGER.debug("Received correct PASS from {}. Accept.", connection.getSocket().getInetAddress().getHostAddress());
+                if (server.password.equals(tokens[1])) {
+                    server.LOGGER.debug("Received correct PASS from {}. Accept.", connection.getSocket().getInetAddress().getHostAddress());
                     connection.id = server.nextClientID.getAndIncrement();
                     connection.send(Protocol.MESSAGES.HELLO(connection.id));
                     connection.state = Connection.State.READY;
 
+                    server.LOGGER.info("{}#{} connected to the server.", connection.name, connection.id);
                     connection.send(Protocol.MESSAGES.PRESET(server.getPreset()));
 
                     // Send other client informations
@@ -109,18 +111,18 @@ public class MessageHandler {
                         }
                     }
                 } else {
-                    connection.getServer().LOGGER.debug("Received incorrect PASS from {}. Sending DENIED.", connection.getSocket().getInetAddress().getHostAddress());
+                    server.LOGGER.debug("Received incorrect PASS from {}. Sending DENIED.", connection.getSocket().getInetAddress().getHostAddress());
                     connection.send(Protocol.MESSAGES.DENIED);
                 }
                 break;
             case Protocol.MESSAGES.SPEED:
                 if (connection.state != Connection.State.READY) {
-                    connection.getServer().LOGGER.warn("Client at {} wanted to set speed to {} without handshake.", connection.getSocket().getInetAddress().getHostAddress(), tokens[1]);
+                    server.LOGGER.warn("Client at {} wanted to set speed to {} without handshake.", connection.getSocket().getInetAddress().getHostAddress(), tokens[1]);
                     break;
                 }
 
                 if (tokens.length < 2) {
-                    connection.getServer().LOGGER.warn("Client at {} sent SPEED without arguments.", connection.getSocket().getInetAddress().getHostAddress());
+                    server.LOGGER.warn("Client at {} sent SPEED without arguments.", connection.getSocket().getInetAddress().getHostAddress());
                     break;
                 }
 
@@ -138,7 +140,7 @@ public class MessageHandler {
                 break;
             case Protocol.MESSAGES.SYNC:
                 if (connection.state != Connection.State.READY) {
-                    connection.getServer().LOGGER.warn("Client at {} wanted to sync without handshake.", connection.getSocket().getInetAddress().getHostAddress());
+                    server.LOGGER.warn("Client at {} wanted to sync without handshake.", connection.getSocket().getInetAddress().getHostAddress());
                     break;
                 }
 
