@@ -62,7 +62,7 @@ public class SpeedNegotiator {
             return;
 
         // Reset speed to auto-sync
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < server.getPreset().getMaxSpeed(); i++) {
             robot.keyPress(server.SPEED_DOWN_KEY);
             robot.keyRelease(server.SPEED_DOWN_KEY);
         }
