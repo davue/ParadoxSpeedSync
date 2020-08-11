@@ -59,6 +59,8 @@ public class SetupController {
     public HBox customSettings;
     @FXML
     public VBox customSettingsChoice;
+    @FXML
+    public VBox serverSettings;
 
     @FXML
     public void initialize() {

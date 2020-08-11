@@ -95,7 +95,7 @@
                 <Insets bottom="5.0"/>
             </padding>
         </VBox>
-        <VBox>
+        <VBox fx:id="serverSettings">
             <children>
                 <HBox styleClass="body">
                     <children>
@@ -129,62 +129,65 @@
                         <Insets left="5.0" right="5.0" top="5.0"/>
                     </VBox.margin>
                 </HBox>
+                <VBox fx:id="customSettingsChoice">
+                    <children>
+                        <HBox styleClass="body">
+                            <children>
+                                <HBox alignment="CENTER_LEFT" HBox.hgrow="NEVER">
+                                    <children>
+                                        <Label text="Preset"/>
+                                    </children>
+                                    <HBox.margin>
+                                        <Insets right="5.0"/>
+                                    </HBox.margin>
+                                </HBox>
+                                <ChoiceBox fx:id="choiceBox" maxWidth="1.7976931348623157E308" value="Crusader Kings II"
+                                           HBox.hgrow="ALWAYS">
+                                </ChoiceBox>
+                            </children>
+                            <VBox.margin>
+                                <Insets left="5.0" right="5.0"/>
+                            </VBox.margin>
+                        </HBox>
+                        <HBox fx:id="customSettings">
+                            <children>
+                                <HBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+                                    <children>
+                                        <Label text="Default">
+                                            <HBox.margin>
+                                                <Insets right="5.0"/>
+                                            </HBox.margin>
+                                        </Label>
+                                        <TextField fx:id="defaultSpeedBox" alignment="CENTER_RIGHT" maxWidth="41.0"
+                                                   prefHeight="20.0" style="-fx-background-color: #424242;" text="1"/>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+                                    <children>
+                                        <Label text="Max">
+                                            <HBox.margin>
+                                                <Insets right="5.0"/>
+                                            </HBox.margin>
+                                        </Label>
+                                        <TextField fx:id="maxSpeedBox" alignment="CENTER_RIGHT" maxWidth="41.0"
+                                                   prefHeight="20.0" style="-fx-background-color: #424242;" text="5"/>
+                                    </children>
+                                </HBox>
+                            </children>
+                            <VBox.margin>
+                                <Insets left="5.0" right="5.0" top="5.0"/>
+                            </VBox.margin>
+                        </HBox>
+                    </children>
+                    <VBox.margin>
+                        <Insets top="5.0"/>
+                    </VBox.margin>
+                </VBox>
             </children>
             <padding>
                 <Insets bottom="5.0"/>
             </padding>
         </VBox>
-        <VBox fx:id="customSettingsChoice">
-            <children>
-                <HBox styleClass="body">
-                    <children>
-                        <HBox alignment="CENTER_LEFT" HBox.hgrow="NEVER">
-                            <children>
-                                <Label text="Preset"/>
-                            </children>
-                            <HBox.margin>
-                                <Insets right="5.0"/>
-                            </HBox.margin>
-                        </HBox>
-                        <ChoiceBox fx:id="choiceBox" maxWidth="1.7976931348623157E308" value="Crusader Kings II"
-                                   HBox.hgrow="ALWAYS">
-                        </ChoiceBox>
-                    </children>
-                    <VBox.margin>
-                        <Insets left="5.0" right="5.0"/>
-                    </VBox.margin>
-                </HBox>
-            </children>
-        </VBox>
-        <HBox fx:id="customSettings">
-            <children>
-                <HBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
-                    <children>
-                        <Label text="Default">
-                            <HBox.margin>
-                                <Insets right="5.0"/>
-                            </HBox.margin>
-                        </Label>
-                        <TextField fx:id="defaultSpeedBox" alignment="CENTER_RIGHT" maxWidth="41.0" prefHeight="20.0"
-                                   style="-fx-background-color: #424242;" text="1"/>
-                    </children>
-                </HBox>
-                <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
-                    <children>
-                        <Label text="Max">
-                            <HBox.margin>
-                                <Insets right="5.0"/>
-                            </HBox.margin>
-                        </Label>
-                        <TextField fx:id="maxSpeedBox" alignment="CENTER_RIGHT" maxWidth="41.0" prefHeight="20.0"
-                                   style="-fx-background-color: #424242;" text="5"/>
-                    </children>
-                </HBox>
-            </children>
-            <VBox.margin>
-                <Insets left="5.0" right="5.0" top="5.0"/>
-            </VBox.margin>
-        </HBox>
         <HBox>
             <VBox.margin>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
