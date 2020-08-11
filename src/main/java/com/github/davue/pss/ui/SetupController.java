@@ -25,6 +25,7 @@ import com.github.davue.pss.presets.impl.Custom;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -100,6 +101,12 @@ public class SetupController {
         } else {
             serverSpeedDown.setText(java.awt.event.KeyEvent.getKeyText(Main.server.SPEED_DOWN_KEY));
         }
+
+        // Consume key presses to prevent focus change on buttons
+        clientSpeedUp.addEventFilter(KeyEvent.KEY_PRESSED, Event::consume);
+        clientSpeedDown.addEventFilter(KeyEvent.KEY_PRESSED, Event::consume);
+        serverSpeedUp.addEventFilter(KeyEvent.KEY_PRESSED, Event::consume);
+        serverSpeedDown.addEventFilter(KeyEvent.KEY_PRESSED, Event::consume);
     }
 
     @FXML
