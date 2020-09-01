@@ -34,7 +34,7 @@ public class WindowFocusListener {
         }
     }
 
-    private static final String[] validGames = {"ck2game", "stellaris", "hoi4", "eu4"};
+    private static final String[] validGames = {"ck2game", "stellaris", "hoi4", "eu4", "ck3"};
 
     public static boolean isGameFocused() {
         if (Platform.isWindows()) {
