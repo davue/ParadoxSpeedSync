@@ -23,7 +23,7 @@ import com.github.davue.pss.presets.Preset;
 public class Default implements Preset {
     @Override
     public String getName() {
-        return "CK2 / HoI4 / EU4";
+        return "CK / HoI4 / EU4";
     }
 
     @Override
