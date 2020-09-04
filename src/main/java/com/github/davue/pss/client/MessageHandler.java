@@ -69,11 +69,11 @@ public class MessageHandler {
                 client.LOGGER.debug("Received PASS from {}. Password required.", connection.getSocket().getInetAddress().getHostAddress());
 
                 if (client.password.isEmpty()) {
-                    client.LOGGER.info("Server requires password but no password was specified. Exiting.");
-                    System.exit(1);
+                    Main.showError("Password required");
+                } else {
+                    connection.send(Protocol.MESSAGES.PASS(client.password));
                 }
 
-                connection.send(Protocol.MESSAGES.PASS(client.password));
                 connection.state = Connection.State.INIT;
                 break;
             case Protocol.MESSAGES.DENIED:
