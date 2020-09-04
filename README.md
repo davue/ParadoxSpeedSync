@@ -2,7 +2,7 @@
 A cross-platform compatible tool to overcome the limitations of the speed controls of Clausewitz Engine games in multiplayer.
 
 ## What
-In games like Crusader Kings II and Hearts of Iron IV, only the host of a multiplayer session is able to control the game speed
+In games like Crusader Kings II / III and Hearts of Iron IV, only the host of a multiplayer session is able to control the game speed
 and I always thought that it would be a nice idea to simply run the game at the speed of the slowest player. That way,
 you don't have to ask for permission all the time if you want to adjust the game speed.
 
@@ -44,6 +44,7 @@ You can either:
 ## Known Issues
 * Stellaris somehow does not support keybound speed controls in multiplayer, so this will not work until they fix it.
 * LINUX (*Tested on Ubuntu 20.04*): The global key listener does not seem to work and the text scaling is a bit off.
+* Clients sometimes seem to shadow disconnect (client thinks its still connected while it actually isn't)
 
 ## Planned Features
 * Different speed agreement strategies
