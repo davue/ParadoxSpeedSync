@@ -105,13 +105,19 @@ public class MessageHandler {
                 int speed = Integer.parseInt(tokens[2]);
                 String name = String.join(" ", Arrays.copyOfRange(tokens, 3, tokens.length));
 
-                client.LOGGER.debug("Received UPDATE for client {} ({}) with speed {}", id, name, speed);
+                client.LOGGER.debug("Received UPDATE for client {} ({}) with speed {}.", id, name, speed);
                 ClientManager.update(id, name, speed);
                 break;
             case Protocol.MESSAGES.CLOSE:
-                client.LOGGER.debug("Server at {} closes connection.", connection.getSocket().getInetAddress().getHostAddress());
-                connection.state = Connection.State.DISCONNECTED;
-                Main.showError("Connection closed");
+                if (tokens.length == 1) {
+                    client.LOGGER.debug("Server at {} closes connection.", connection.getSocket().getInetAddress().getHostAddress());
+                    connection.state = Connection.State.DISCONNECTED;
+                    Main.showError("Connection closed");
+                } else {
+                    client.LOGGER.debug("Client #{} disconnected from the server.", tokens[1]);
+                    ClientManager.remove(Integer.parseInt(tokens[1]));
+                }
+
                 break;
             default:
                 client.LOGGER.warn("Received unknown message: {}", msg);

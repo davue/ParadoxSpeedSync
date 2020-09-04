@@ -59,7 +59,7 @@ public class Protocol {
          */
         public static final String DENIED = "DENIED";
         /**
-         * The CLOSE message a client receives if the is closing.
+         * The CLOSE message a client receives if the server is closing.
          */
         public static final String CLOSE = "CLOSE";
         /**
@@ -137,10 +137,20 @@ public class Protocol {
          * Constructs a PRESET message with the given preset.
          *
          * @param preset The preset to send.
-         * @return The constructed message reade to be sent.
+         * @return The constructed message ready to be sent.
          */
         public static String PRESET(Preset preset) {
             return PRESET + " " + preset.getMaxSpeed() + " " + preset.getDefaultSpeed();
+        }
+
+        /**
+         * Construct a close message to notify a client that another client with the given ID disconnected from the server.
+         *
+         * @param id The ID of the client who disconnected.
+         * @return The constructed message ready to be sent.
+         */
+        public static String CLOSE(int id) {
+            return CLOSE + " " + id;
         }
     }
 }

@@ -18,6 +18,7 @@
 
 package com.github.davue.pss.server;
 
+import com.github.davue.pss.Protocol;
 import com.github.davue.pss.client.ClientManager;
 
 import java.io.BufferedReader;
@@ -82,10 +83,20 @@ public class Connection extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            // Remove connection from server connection list on error
-            server.connections.remove(this);
-            server.getSpeedNegotiator().check();
-            ClientManager.remove(id);
+            if (state == State.READY) {
+                server.LOGGER.info("{}#{} disconnected from the server.", name, id);
+
+                // Remove connection from server connection list on error
+                server.connections.remove(this);
+                server.getSpeedNegotiator().check();
+
+                // Notify all other clients of the disconnected client
+                for (Connection connection : server.connections) {
+                    connection.send(Protocol.MESSAGES.CLOSE(this.id));
+                }
+            }
+
+            server.LOGGER.debug("Connection from {} closed.", socket.getInetAddress().getHostAddress());
         }
     }
 
